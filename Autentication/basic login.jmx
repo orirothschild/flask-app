@@ -70,6 +70,40 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import groovy.json.JsonSlurper;
+class ResponsestatusChecker{
+	private String failureMessage;
+
+	
+	String checkResponseStatus(SampleResult prev){
+		def jsonResponse = null;
+		
+		try {
+		    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
+		    } catch (Exception e) {
+		    failureMessage += &quot;Invalid JSON.\n&quot;
+		}
+		
+		if(!&quot;200&quot;.equals(prev.getResponseCode())){
+			failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
+		}
+		
+		if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+		          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+		}
+		
+		return this.failureMessage;
+		
+	}
+}
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies"/>
           <boolProp name="CookieManager.clearEachIteration">true</boolProp>
@@ -127,6 +161,9 @@ String specialId = null;
 
 JsonSlurper JSON = new JsonSlurper ();
 
+ResponsestatusChecker checky = new ResponsestatusChecker();
+log.info(checky);
+
 	try {
 	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
 	    } catch (Exception e) {
@@ -180,7 +217,6 @@ JsonSlurper JSON = new JsonSlurper ();
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="script">String token = vars.get(&quot;token&quot;)
 props.put(&quot;token&quot;, token);
-log.info (&quot;look here please!!!!!!!!!!!!!!!! &quot; +props.get(&quot;token&quot;));
 //vars.put(&quot;token&quot;, token);</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
@@ -924,7 +960,7 @@ log.info (&quot;look here please!!!!!!!!!!!!!!!! &quot; +props.get(&quot;token&q
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="updateMember" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="updateMember" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1533,7 +1569,7 @@ log.info (&quot;The example answer is &quot; + firstName);
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="recoverPassword" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="recoverPassword" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1673,7 +1709,7 @@ log.info (&quot;The example answer is &quot; + firstName);
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="resetPassword" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="resetPassword" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1887,7 +1923,7 @@ log.info (&quot;The example answer is &quot; + firstName);
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="updatePassword" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="updatePassword" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
