@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137">
+  <hashTree>
+    <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+      <stringProp name="scriptLanguage">groovy</stringProp>
+      <stringProp name="parameters"></stringProp>
+      <stringProp name="filename"></stringProp>
+      <stringProp name="cacheKey">true</stringProp>
+      <stringProp name="script">import groovy.json.JsonSlurper;
+class ResponsestatusChecker{
+	private String failureMessage;
+
+	
+	String checkResponseStatus(SampleResult prev){
+		def jsonResponse = null;
+		
+		try {
+		    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
+		    } catch (Exception e) {
+		    failureMessage += &quot;Invalid JSON.\n&quot;
+		}
+		
+		if(!&quot;200&quot;.equals(prev.getResponseCode())){
+			failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
+		}
+		
+		if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+		          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+		}
+		
+		return this.failureMessage;
+		
+	}
+}
+</stringProp>
+    </JSR223PreProcessor>
+    <hashTree/>
+  </hashTree>
+</jmeterTestPlan>
