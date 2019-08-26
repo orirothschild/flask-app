@@ -62,7 +62,7 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Registeration" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Registeration" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -109,7 +109,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;:&quot;ori.r@ls-techs.com&quot;,&#xd;
+	&quot;email&quot;:&quot;ori.rtttt@ls-techs.com&quot;,&#xd;
 	&quot;password&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;PasswordConfirmation&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
@@ -161,9 +161,6 @@ JsonSlurper JSON = new JsonSlurper ();
 	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
 	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
 	}
-	if(jsonResponse.get(&apos;status&apos;).equals(&apos;false&apos;)){
-		failureMessage += &quot;The request status returned false.\n\n&quot;;
-	}
 	
 	customer = jsonResponse.get(&apos;data&apos;);
 	customerKeys = customer.keySet();
@@ -187,6 +184,7 @@ JsonSlurper JSON = new JsonSlurper ();
 	    AssertionResult.setFailureMessage(failureMessage);
 	    AssertionResult.setFailure(true);    
 	}
+	
 	vars.put(&apos;email&apos;,customer.get(&apos;email&apos;));
 	vars.put(&apos;id&apos;,customer.get(&apos;id&apos;));</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
@@ -232,14 +230,14 @@ JsonSlurper JSON = new JsonSlurper ();
         </hashTree>
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="UserToken conformation" enabled="true">
           <stringProp name="dataSource">test</stringProp>
-          <stringProp name="query">select top 10 Active,UserToken from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
+          <stringProp name="query">select top 10 Active from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
           <stringProp name="queryType">Select Statement</stringProp>
           <stringProp name="resultSetHandler">Store as String</stringProp>
           <stringProp name="resultVariable">email</stringProp>
-          <stringProp name="variableNames">col1,col2</stringProp>
+          <stringProp name="variableNames">col1,</stringProp>
         </JDBCSampler>
         <hashTree>
           <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -365,14 +363,6 @@ JsonSlurper JSON = new JsonSlurper ();
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">vars.put(&apos;Token&apos;,vars.get(&apos;col2_1&apos;));</stringProp>
-          </JSR223PostProcessor>
-          <hashTree/>
         </hashTree>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
@@ -419,7 +409,7 @@ JsonSlurper JSON = new JsonSlurper ();
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Validation" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Validation" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -459,7 +449,7 @@ JsonSlurper JSON = new JsonSlurper ();
           <stringProp name="username">sqladmin</stringProp>
         </JDBCDataSource>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -575,6 +565,14 @@ JsonSlurper JSON = new JsonSlurper ();
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">props.put(&apos;Token&apos;, &apos;elUWUr6cin9svwE4fDLSkyAiemcvJ72LOn0QHCbbPygCItzTQoxhnnaGzipwvlJbAmrMIROtOt3dJwVL1fLhViu/9AiW3WTddkhvFCMD+ffn27p60j7OrPHbnBFInaD6OjZ9JI51z6vJXhb6dFH2oIqKpN6g8LaIlz63kGKdPJ3RGbTHk+FO36/3ztid9hddbubqD8NQFz/LHFiR/sYxHUi9160atkW9xlRN+gnuv7h+XoYzdS247/rlOycflmbmNnFNWpVZgVjdNERsNTbq50sCUcAXcp+FISc5GhYJ6PMJ4S+bKAL5iyLx+gPj9iw/WGJ1w06myU/uj0tr8EkicO624wgtCHfeMp2LFAhSgKshy1FE5T9FX+8tq20MEYBoO5WGO/vj7RPGhL4+y1WVyooR3bLKUGHGIeVOTkW0kWKc9fvD3Olq7tRLUMYuQc4fJ9XEB2GS2a/X/7Lz4gaWhdf84tJyTBfi0B08/i5dNLe6vw2xlJl4CU4umw596UnfauiNvmq5L3TZFvExNAqSJoNm0DQsAeb361wWWfNq3c3/nhF+pyBv2aMH5CvGdmMH/uhF3+p+yoJNA4Fp5aybbGaq6o9Ocd8LD0/4VU05pWX/aswmNsjw5Jn6StP17hAcS7c+Qd+WnxoxZT+xPJ4zsoa8jYo5QTmkf7m5kU2o/Vg=&apos;);</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -637,7 +635,7 @@ JsonSlurper JSON = new JsonSlurper ();
 	
 	message = jsonResponse.get(&apos;data&apos;);
 
-		if (!(message.contains(&quot;id&quot;) &amp;&amp; message.contains(&apos;token&apos;))) {
+		if (!message.contains(&quot;id&quot;)) {
 	          failureMessage += &quot;The message dosent contain memberid Field.\n\n&quot;;
 	}
 	
@@ -700,274 +698,7 @@ JsonSlurper JSON = new JsonSlurper ();
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateFaceBook" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-	&quot;logintype&quot;:4,&#xd;
-	&quot;Id&quot;:10212715361392400&#xd;
-}&#xd;
-</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${site}</stringProp>
-          <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/users/Authenticate</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Token</stringProp>
-                <stringProp name="Header.value">EAArU6rU8F9kBACpROFIvEDAt2aFImRMXSAIe1a2xvZBmaVVyZCe8Gw4N9zZCAxSeVxoTZA0elXIf2GAvz7LtxC94m8j5vBSnUn2hZCFVkNR7iwpvdo9gbn0bash3ZCNuDUQbg35UmaoPwkZAV4Bhgacm8Jmu4sxWWS5MZBpNHW1iZAGx82eyXd35AF9HT0nJpS2daP7EsxGaRaQZDZD</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">
-
-class ResponseChecker{
-	String failuremessage;
-
-	def stringChecker(){
-		this.failuremessage = &apos;&apos;;
-	}
-	public String sayhello(){
-		return &apos;hello&apos;;
-	}
-
-	public String jsonConfig(AbstractCollection collection){
-		if (!collection.containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-		}
-		return failureMessage;
-	}
-
-	public String getStatusCode(String status){
-		if(status.equals(&apos;false&apos;)){
-		failureMessage += &quot;The request returned with a false status \n\n&quot;;
-		}
-		return failureMessage;	
-	}
-
-	public String dataIsCollection(AbstractCollection map, String [] fields){
-		if(!map.keyset().containsAll(fields)){
-		failureMessage += &quot;The request returned without a valid fields \n\n&quot;;
-		}
-		
-		return failureMessage;
-	}
-
-	public String dataIsString(String data, String toCheck){
-		if(!data.contains(toCheck)){
-		failureMessage += &quot;The request returned without a valid fields \n\n&quot;;
-		}
-		return failureMessage;
-	}
-
-	public String errorDiscription(String msg){
-		if (msg?.trim()) {
-	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
-	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
-		return  failureMessage;
-	}
-	}
-		
-	}
-
-	ResponseChecker JsonChecker = new ResponseChecker();
-	vars.putObject(&apos;JsonChecker&apos;,JsonChecker);
-
-</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import groovy.json.JsonSlurper;
-
-def failureMessage = &quot;&quot;;
-def jsonResponse = null;
-def responseSet = null;
-
-JsonSlurper JSON = new JsonSlurper ();
-def checker = vars.getObject(&apos;JsonChecker&apos;);
-
-	try {
-	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
-	    } catch (Exception e) {
-	    failureMessage += &quot;Invalid JSON.\n&quot;
-	}
-	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
-	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
-	
-	faliureMessage = checker.getStatusCode(jsonResponse.get(&apos;status&apos;));
-	loginfo(failureMessage);
-	
-	if(jsonResponse.get(&apos;status&apos;).equals(&apos;false&apos;)){
-	failureMessage += &quot;The request returned with a false status \n\n&quot;;
-	}
-	
-	
-	responseSet = jsonResponse.get(&apos;data&apos;).keySet();
-	if(!responseSet.containsAll([&apos;id&apos;,&apos;email&apos;,&apos;token&apos;])){
-		failureMessage += &quot;The request returned without a valid token \n\n&quot;;
-	}
-	
-	// Print error messages if any
-	if (failureMessage?.trim()) {
-	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
-	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
-	
-	    AssertionResult.setFailureMessage(failureMessage);
-	    AssertionResult.setFailure(true);    
-	}
-	</stringProp>
-          </JSR223Assertion>
-          <hashTree/>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-          <ResultCollector guiclass="AssertionVisualizer" testclass="ResultCollector" testname="Assertion Results" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateGoogle" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateFaceBook" enabled="false">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
@@ -1150,50 +881,6 @@ JsonSlurper JSON = new JsonSlurper ();
 	}
 	</stringProp>
           </JSR223Assertion>
-          <hashTree/>
-        </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
-          <boolProp name="displayJMeterProperties">true</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
           <hashTree/>
         </hashTree>
       </hashTree>
