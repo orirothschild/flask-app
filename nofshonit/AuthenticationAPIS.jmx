@@ -33,6 +33,111 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+        <stringProp name="scriptLanguage">groovy</stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="script">
+class ResponseChecker{
+	String failureMessage;
+
+	def stringChecker(){
+		this.failureMessage = &apos;&apos;;
+	}
+	
+	public void getStatusCode(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev, String requiredStatus){
+		if(!requiredStatus.equals(prev.getResponseCode())){
+			this.failureMessage = &quot;Expected &lt;response code&gt; &quot;+ requiredStatus+&quot; but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
+	    }
+	}
+
+	public void jsonConfig(AbstractCollection collection){
+		 if(collection == null){
+		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
+		 	return;
+		 }
+		if (!collection.keyset().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+		}
+	}
+
+	public void jsonConfigMap(groovy.json.internal.LazyMap jsonResponse){
+			if(jsonResponse == null){
+		 	this.failureMessage += &quot;jsonConfigMap got null map&quot;;
+		 	return;
+		 }
+		if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+	     }
+	}
+
+	public void getStatusHeader(Boolean status){
+		if(status== null){
+		 	this.failureMessage += &quot;statusHeader got null status&quot;;
+		 	return;
+		 }
+		if(status.equals(false)){
+			this.failureMessage += &quot;The request returned with a false status \n\n&quot;;
+		}
+	}
+
+	public void dataIsCollection(AbstractCollection map, String fields, String returnedMessage){
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataCollection got null values&quot;;
+		 	return;
+		 }
+		if(!map.containsAll(fields.split())){
+			 this.failureMessage += returnedMessage;
+		}
+		//org.apache.log4j.Logger.error(map.containsAll(fields.split()))
+	}
+	
+
+	public void dataIsLazyMap(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyMap got null values&quot;;
+		 	return;
+		 }
+		if(!map.keySet().containsAll(fields.split())){
+			 this.failureMessage += returnedMessage;
+		}
+	}
+
+	public void dataIsLazyKeySet(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyKeySet got null values&quot;;
+		 	return;
+		 }
+		String fieldsToCheck = fields.split(&quot;/&quot;);
+		if(!map.containsAll(fieldsToCheck)){
+			 this.failureMessage += returnedMessage;
+		}
+	}
+
+	public void dataIsString(String data, String toCheck){
+		if(data == null || toCheck == null){
+		 	this.failureMessage += &quot;dataIsString got null values&quot;;
+		 	return;
+		 }
+		if(!data.contains(toCheck)){
+		 	this.failureMessage += &quot;The request returned without a valid fields (String data) \n\n&quot;;
+		}
+	}
+
+	public String getFailureMassage(){
+		return this.failureMessage;
+	}
+
+	}
+
+	ResponseChecker JsonChecker = new ResponseChecker();
+	vars.putObject(&apos;JsonChecker&apos;,JsonChecker);
+	props.put(&apos;JsonChecker&apos;,JsonChecker);
+
+</stringProp>
+      </JSR223PreProcessor>
+      <hashTree/>
       <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="Accept" elementType="Header">
@@ -147,38 +252,22 @@ def customer = null;
 Set customerKeys = null;
 
 JsonSlurper JSON = new JsonSlurper ();
+def checker = props.get(&apos;JsonChecker&apos;);
 
 	try {
 	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
 	    } catch (Exception e) {
 	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
 	}
 	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.jsonConfigMap(jsonResponse);
+	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id firstName lastName token premiumType&quot;,&quot;the required request dont contain the right autentication properties \n\n&quot;);
+	failureMessage = checker.getFailureMassage();
 	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
-	if(jsonResponse.get(&apos;status&apos;).equals(&apos;false&apos;)){
-		failureMessage += &quot;The request status returned false.\n\n&quot;;
-	}
-	
-	customer = jsonResponse.get(&apos;data&apos;);
-	customerKeys = customer.keySet();
-	
-	
-	if (!customerKeys.containsAll([&apos;id&apos;,&apos;firstName&apos;,&apos;lastName&apos;,&apos;token&apos;,&apos;premiumType&apos;])) {
-	          failureMessage += &quot;the required request dont contain the right autentication properties&quot;;
-	}
-		
-	/*
-	if (!jsonResponse.result.numberOfExpectedServers != 3) {
-		failureMessage += &quot;The element has wrong number of servers. Number of servers is:[&quot; + jsonResponse.result.numberOfExpectedServers + &quot;]\n\n&quot;;
-	} 
-	*/
-	// Print error messages if any
 	if (failureMessage?.trim()) {
 	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
 	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
@@ -187,8 +276,8 @@ JsonSlurper JSON = new JsonSlurper ();
 	    AssertionResult.setFailureMessage(failureMessage);
 	    AssertionResult.setFailure(true);    
 	}
-	vars.put(&apos;email&apos;,customer.get(&apos;email&apos;));
-	vars.put(&apos;id&apos;,customer.get(&apos;id&apos;));</stringProp>
+	vars.put(&apos;email&apos;,jsonResponse.get(&apos;data&apos;).get(&apos;email&apos;));
+	vars.put(&apos;id&apos;,jsonResponse.get(&apos;data&apos;).get(&apos;id&apos;));</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223Assertion>
           <hashTree/>
@@ -459,7 +548,7 @@ JsonSlurper JSON = new JsonSlurper ();
           <stringProp name="username">sqladmin</stringProp>
         </JDBCDataSource>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -501,26 +590,24 @@ String message = null;
 
 JsonSlurper JSON = new JsonSlurper ();
 
+def checker = props.get(&apos;JsonChecker&apos;);
+
 	try {
 	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
 	    } catch (Exception e) {
 	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
 	}
 	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.jsonConfigMap(jsonResponse);
+	checker.dataIsString(jsonResponse.get(&apos;message&apos;),&quot;תודה להרשמתך למועדו&quot;);
+	failureMessage = checker.getFailureMassage();
 	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
 	
-	message = jsonResponse.get(&apos;message&apos;);
 	
-	if (!message.contains(&apos;תודה להרשמתך למועדון&apos;)) {
-	          failureMessage += &quot;the required request dont contain the right message string&quot;;
-	}
-		
 	/*
 	if (!jsonResponse.result.numberOfExpectedServers != 3) {
 		failureMessage += &quot;The element has wrong number of servers. Number of servers is:[&quot; + jsonResponse.result.numberOfExpectedServers + &quot;]\n\n&quot;;
@@ -620,31 +707,22 @@ def jsonResponse = null;
 String message = null;
 
 JsonSlurper JSON = new JsonSlurper ();
+def checker = props.get(&apos;JsonChecker&apos;);
 
 	try {
 	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
 	    } catch (Exception e) {
 	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
 	}
 	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
-	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
-	
-	message = jsonResponse.get(&apos;data&apos;);
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.jsonConfigMap(jsonResponse);
+	checker.dataIsLazyMap(jsonResponse.get(&apos;data&apos;),&quot;id firstName lastName token &quot;, &quot;the email conformation response dosent contain the right properties&quot;);
+	failureMessage = checker.getFailureMassage();	
 
-		if (!(message.contains(&quot;id&quot;) &amp;&amp; message.contains(&apos;token&apos;))) {
-	          failureMessage += &quot;The message dosent contain memberid Field.\n\n&quot;;
-	}
-	
-//	if (!message.contains(&apos;תודה להרשמתך למועדון&apos;)) {
-//	          failureMessage += &quot;the required request dont contain the right message string&quot;;
-//	}
-		
 	/*
 	if (!jsonResponse.result.numberOfExpectedServers != 3) {
 		failureMessage += &quot;The element has wrong number of servers. Number of servers is:[&quot; + jsonResponse.result.numberOfExpectedServers + &quot;]\n\n&quot;;
@@ -734,73 +812,10 @@ JsonSlurper JSON = new JsonSlurper ();
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Token</stringProp>
-                <stringProp name="Header.value">EAArU6rU8F9kBACpROFIvEDAt2aFImRMXSAIe1a2xvZBmaVVyZCe8Gw4N9zZCAxSeVxoTZA0elXIf2GAvz7LtxC94m8j5vBSnUn2hZCFVkNR7iwpvdo9gbn0bash3ZCNuDUQbg35UmaoPwkZAV4Bhgacm8Jmu4sxWWS5MZBpNHW1iZAGx82eyXd35AF9HT0nJpS2daP7EsxGaRaQZDZD</stringProp>
+                <stringProp name="Header.value">EAArU6rU8F9kBAMR5qD4kZC6KsYtkcBiHQmPW1ZCRO86WPBzmSPBZAZAOyP01Vzj5ZA7Icz38OQtswdBVgWZC0jkb61k28wwSgCoaQSZCyhXVShLOglULfttFcEQZCvPfjPPmmu6VesVj2N5qu3dSDlZCcgAXxudI6R9IZB29Cw1ZC4nUSDJmzVEOJI5zZA2Oal5e4U5ptUeyymSdKwZDZD</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">
-
-class ResponseChecker{
-	String failuremessage;
-
-	def stringChecker(){
-		this.failuremessage = &apos;&apos;;
-	}
-	public String sayhello(){
-		return &apos;hello&apos;;
-	}
-
-	public String jsonConfig(AbstractCollection collection){
-		if (!collection.containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-		}
-		return failureMessage;
-	}
-
-	public String getStatusCode(String status){
-		if(status.equals(&apos;false&apos;)){
-		failureMessage += &quot;The request returned with a false status \n\n&quot;;
-		}
-		return failureMessage;	
-	}
-
-	public String dataIsCollection(AbstractCollection map, String [] fields){
-		if(!map.keyset().containsAll(fields)){
-		failureMessage += &quot;The request returned without a valid fields \n\n&quot;;
-		}
-		
-		return failureMessage;
-	}
-
-	public String dataIsString(String data, String toCheck){
-		if(!data.contains(toCheck)){
-		failureMessage += &quot;The request returned without a valid fields \n\n&quot;;
-		}
-		return failureMessage;
-	}
-
-	public String errorDiscription(String msg){
-		if (msg?.trim()) {
-	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
-	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
-		return  failureMessage;
-	}
-	}
-		
-	}
-
-	ResponseChecker JsonChecker = new ResponseChecker();
-	vars.putObject(&apos;JsonChecker&apos;,JsonChecker);
-
-</stringProp>
-          </JSR223PreProcessor>
           <hashTree/>
           <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
@@ -809,44 +824,32 @@ class ResponseChecker{
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="script">import groovy.json.JsonSlurper;
 
-def failureMessage = &quot;&quot;;
+String failureMessage = &quot;&quot;;
 def jsonResponse = null;
 def responseSet = null;
+def jsonData = null;
 
 JsonSlurper JSON = new JsonSlurper ();
-def checker = vars.getObject(&apos;JsonChecker&apos;);
+def checker = props.get(&apos;JsonChecker&apos;);
 
 	try {
 	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
 	    } catch (Exception e) {
 	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
 	}
 	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
-	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
-	
-	faliureMessage = checker.getStatusCode(jsonResponse.get(&apos;status&apos;));
-	loginfo(failureMessage);
-	
-	if(jsonResponse.get(&apos;status&apos;).equals(&apos;false&apos;)){
-	failureMessage += &quot;The request returned with a false status \n\n&quot;;
-	}
-	
-	
-	responseSet = jsonResponse.get(&apos;data&apos;).keySet();
-	if(!responseSet.containsAll([&apos;id&apos;,&apos;email&apos;,&apos;token&apos;])){
-		failureMessage += &quot;The request returned without a valid token \n\n&quot;;
-	}
-	
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.jsonConfigMap(jsonResponse);
+	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id email token&quot;,&quot;The request returned without a valid token \n\n&quot;);
+	failureMessage = checker.getFailureMassage();
+
 	// Print error messages if any
 	if (failureMessage?.trim()) {
 	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
+         failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
 	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
 	
 	    AssertionResult.setFailureMessage(failureMessage);
@@ -967,16 +970,27 @@ def checker = vars.getObject(&apos;JsonChecker&apos;);
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateGoogle" enabled="false">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateGoogle" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;logintype&quot;:5,&#xd;
+	&quot;AccessID&quot;:106900849957465466753&#xd;
+}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain"></stringProp>
-          <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.domain">${site}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path"></stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.path">/api/users/Authenticate</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -986,6 +1000,47 @@ def checker = vars.getObject(&apos;JsonChecker&apos;);
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import groovy.json.JsonSlurper;
+
+String failureMessage = &quot;&quot;;
+def jsonResponse = null;
+def responseSet = null;
+def jsonData = null;
+
+JsonSlurper JSON = new JsonSlurper ();
+def checker = props.get(&apos;JsonChecker&apos;);
+
+	try {
+	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
+	    } catch (Exception e) {
+	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
+	}
+	
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.jsonConfigMap(jsonResponse);
+	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id email accessID token&quot;,&quot;The request returned without a valid token \n\n&quot;);
+	failureMessage = checker.getFailureMassage();
+
+	// Print error messages if any
+	if (failureMessage?.trim()) {
+	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
+         failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
+	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
+	
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);    
+	}
+	</stringProp>
+          </JSR223Assertion>
+          <hashTree/>
           <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
@@ -1097,59 +1152,14 @@ def checker = vars.getObject(&apos;JsonChecker&apos;);
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="false">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import groovy.json.JsonSlurper;
-
-def failureMessage = &quot;&quot;;
-def jsonResponse = null;
-String message = null;
-
-JsonSlurper JSON = new JsonSlurper ();
-
-	try {
-	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
-	    } catch (Exception e) {
-	    failureMessage += &quot;Invalid JSON.\n&quot;
-	}
-	
-	if(!&quot;200&quot;.equals(prev.getResponseCode())){
-		failureMessage += &quot;Expected &lt;response code&gt; [200] but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
-	}
-	
-	if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
-	          failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
-	}
-	
-	message = jsonResponse.get(&apos;data&apos;);
-
-		if (!message.contains(&quot;id&quot;)) {
-	          failureMessage += &quot;The message dosent contain memberid Field.\n\n&quot;;
-	}
-	
-//	if (!message.contains(&apos;תודה להרשמתך למועדון&apos;)) {
-//	          failureMessage += &quot;the required request dont contain the right message string&quot;;
-//	}
-		
-	/*
-	if (!jsonResponse.result.numberOfExpectedServers != 3) {
-		failureMessage += &quot;The element has wrong number of servers. Number of servers is:[&quot; + jsonResponse.result.numberOfExpectedServers + &quot;]\n\n&quot;;
-	} 
-	*/
-	// Print error messages if any
-	if (failureMessage?.trim()) {
-	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
-	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
-	
-	    AssertionResult.setFailureMessage(failureMessage);
-	    AssertionResult.setFailure(true);    
-	}
-	</stringProp>
-          </JSR223Assertion>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Token</stringProp>
+                <stringProp name="Header.value">ya29.GltxB_9tbCWEMVL-FE2etHWROPUaF-qu2ozUdU49NvP4VzyCA8bOnmeiiNBA1OzDjW8rqJa16BcKMBybqLIM3SOQNhU7TCn8cZpMZzYIiu2ft_fb8HhcLODb3V-k</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
           <hashTree/>
         </hashTree>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
