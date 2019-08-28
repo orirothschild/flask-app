@@ -58,6 +58,10 @@ class ResponseChecker{
 	}
 	
 	public void getStatusCode(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev, String requiredStatus){
+		 if(prev == null || requiredStatus == null) {
+		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
+		 	return;
+		 }
 		if(!requiredStatus.equals(prev.getResponseCode())){
 			this.failureMessage = &quot;Expected &lt;response code&gt; &quot;+ requiredStatus+&quot; but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
 	    }
@@ -73,8 +77,8 @@ class ResponseChecker{
 		}
 	}
 
-	public void jsonConfigMap(groovy.json.internal.LazyMap jsonResponse){
-			if(jsonResponse == null){
+	public void ConfigStatusAndData(groovy.json.internal.LazyMap jsonResponse){
+		     if(jsonResponse == null){
 		 	this.failureMessage += &quot;jsonConfigMap got null map&quot;;
 		 	return;
 		 }
@@ -114,6 +118,19 @@ class ResponseChecker{
 			 this.failureMessage += returnedMessage;
 		}
 	}
+	public void dataIsLazyMapArray(List Arr, String fields, String returnedMessage){
+		if(Arr == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyMapArray got null values&quot;;
+		 	return;
+		 }
+		String [] ary = fields.split();
+		
+		for(String field : ary){
+			if(!Arr.every{it.containsKey(field)}){
+				this.failureMessage +=  returnedMessage;
+			}
+		}
+	}
 
 	public void dataIsLazyKeySet(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
 		if(map == null || fields == null || returnedMessage == null){
@@ -126,23 +143,38 @@ class ResponseChecker{
 		}
 	}
 
-	public void dataIsString(String data, String toCheck){
-		if(data == null || toCheck == null){
+	public void dataIsString(String data, String fields, String msg){
+		if(data == null || fields == null || msg == null){
 		 	this.failureMessage += &quot;dataIsString got null values&quot;;
 		 	return;
 		 }
-		if(!data.contains(toCheck)){
-		 	this.failureMessage += &quot;The request returned without a valid fields (String data) \n\n&quot;;
+		String [] ary = fields.split();
+		for(String field : ary){
+			if(!data.contains(field)){
+		 	this.failureMessage += msg +&quot;\n\n&quot;;
+			}
 		}
+		
+//		if(!data.contains(toCheck)){
+//		 	this.failureMessage += &quot;The request returned without a valid fields (String data) \n\n&quot;;
+//		}
 	}
 	
 	public void databaseNotEquals(String oldValue,String newValue, String msg){
+		if(msg == null || oldValue == null || newValue == null){
+		 	this.failureMessage += &quot;databaseNotEquals got null values&quot;;
+		 	return;
+		 }
 		if(oldValue.equals(newValue)){
 			this.failureMessage += msg;
 		}
 	}
 
 	public void databaseEquals(String oldValue,String newValue, String msg){
+		if(msg == null || oldValue == null || newValue == null){
+		 	this.failureMessage += &quot;databaseNotEquals got null values&quot;;
+		 	return;
+		 }
 		if(!oldValue.equals(newValue)){
 			this.failureMessage += msg;
 		}
@@ -237,7 +269,7 @@ class ResponseChecker{
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;:&quot;ori.r@ls-techs.com&quot;,&#xd;
+	&quot;email&quot;:&quot;orir@dts-4u.com&quot;,&#xd;
 	&quot;password&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;PasswordConfirmation&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
@@ -287,7 +319,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.jsonConfigMap(jsonResponse);
+	checker.ConfigStatusAndData(jsonResponse);
 	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id firstName lastName token premiumType&quot;,&quot;the required request dont contain the right autentication properties \n\n&quot;);
 	failureMessage = checker.getFailureMassage();
 	
@@ -544,6 +576,10 @@ def checker = props.get(&apos;JsonChecker&apos;);
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
+          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\extractOldUserTokenJDBC.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
         <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
           <boolProp name="clearEachIteration">true</boolProp>
           <boolProp name="useExpires">true</boolProp>
@@ -625,17 +661,10 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.jsonConfigMap(jsonResponse);
-	checker.dataIsString(jsonResponse.get(&apos;message&apos;),&quot;תודה להרשמתך למועדו&quot;);
+	checker.ConfigStatusAndData(jsonResponse);
+	checker.dataIsString(jsonResponse.get(&apos;message&apos;),&quot;תודה להרשמתך למועדו&quot;,&quot; the message response msg dosent contain the right fields&quot;);
 	failureMessage = checker.getFailureMassage();
 	
-	
-	
-	/*
-	if (!jsonResponse.result.numberOfExpectedServers != 3) {
-		failureMessage += &quot;The element has wrong number of servers. Number of servers is:[&quot; + jsonResponse.result.numberOfExpectedServers + &quot;]\n\n&quot;;
-	} 
-	*/
 	// Print error messages if any
 	if (failureMessage?.trim()) {
 	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
@@ -686,7 +715,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -694,7 +723,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;email&quot;: &quot;ori.r@ls-techs.com&quot;,&#xd;
-	&quot;password&quot;: &quot;978645312Or&quot;,&#xd;
+	&quot;password&quot;: &quot;2&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
 	&quot;PrivateOrBusiness&quot;:1&#xd;
 }&#xd;
@@ -742,7 +771,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.jsonConfigMap(jsonResponse);
+	checker.ConfigStatusAndData(jsonResponse);
 	checker.dataIsLazyMap(jsonResponse.get(&apos;data&apos;),&quot;id firstName lastName token &quot;, &quot;the email conformation response dosent contain the right properties&quot;);
 	failureMessage = checker.getFailureMassage();	
 
@@ -865,7 +894,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.jsonConfigMap(jsonResponse);
+	checker.ConfigStatusAndData(jsonResponse);
 	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id email token&quot;,&quot;The request returned without a valid token \n\n&quot;);
 	failureMessage = checker.getFailureMassage();
 
@@ -993,7 +1022,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateGoogle" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="validateGoogle" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -1049,7 +1078,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.jsonConfigMap(jsonResponse);
+	checker.ConfigStatusAndData(jsonResponse);
 	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id email accessID token&quot;,&quot;The request returned without a valid token \n\n&quot;);
 	failureMessage = checker.getFailureMassage();
 

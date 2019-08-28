@@ -20,7 +20,7 @@
           <stringProp name="query">select top 1 UserToken, from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
-          <stringProp name="variableNames">oldUserToken</stringProp>
+          <stringProp name="variableNames">UserToken</stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
           <stringProp name="resultSetHandler">Store as String</stringProp>
@@ -31,9 +31,9 @@
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">vars.put(&apos;Token&apos;,vars.get(&apos;col1_1&apos;));
-props.put(&apos;Token&apos;,vars.get(&apos;col1_1&apos;));
-props.put(&apos;firstPasswordChange&apos;,vars.get(&apos;firstUpdate_1&apos;));</stringProp>
+            <stringProp name="script">vars.put(&apos;Token&apos;,vars.get(&apos;UserToken&apos;));
+props.put(&apos;Token&apos;,vars.get(&apos;UserToken&apos;));
+</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">

@@ -28,6 +28,11 @@
             <stringProp name="Argument.value">10000000425</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="Token" elementType="Argument">
+            <stringProp name="Argument.name">Token</stringProp>
+            <stringProp name="Argument.value">null</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -42,11 +47,11 @@
 
 class ResponseChecker{
 	String failureMessage = &apos;&apos;;
+	def jsonResponse = null;
 	JsonSlurper JSON = new JsonSlurper();
 
 
 	public def getJsonResponse(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev){
-		def jsonResponse = null;
 		try {
 	    jsonResponse = this.JSON.parseText(prev.getResponseDataAsString());
 	    org.apache.log4j.Logger.error(jsonResponse);
@@ -58,54 +63,50 @@ class ResponseChecker{
 	}
 	
 	public void getStatusCode(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev, String requiredStatus){
-		assert prev != null;
-		assert requiredStatus != null;
+		 if(prev == null || requiredStatus == null) {
+		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
+		 	return;
+		 }
 		if(!requiredStatus.equals(prev.getResponseCode())){
 			this.failureMessage = &quot;Expected &lt;response code&gt; &quot;+ requiredStatus+&quot; but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
 	    }
 	}
 
 	public void jsonConfig(AbstractCollection collection){
-		assert collection != null;
-//		 if(collection == null){
-//		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
-//		 	return;
-//		 }
+		 if(collection == null){
+		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
+		 	return;
+		 }
 		if (!collection.keyset().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
 	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
 		}
 	}
 
 	public void ConfigStatusAndData(groovy.json.internal.LazyMap jsonResponse){
-			assert jsonResponse != null;
-//			if(jsonResponse == null){
-//		 	this.failureMessage += &quot;jsonConfigMap got null map&quot;;
-//		 	return;
-//		 }
+		     if(jsonResponse == null){
+		 	this.failureMessage += &quot;jsonConfigMap got null map&quot;;
+		 	return;
+		 }
 		if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
 	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
 	     }
 	}
 
 	public void getStatusHeader(Boolean status){
-		assert status != null;
-//		if(status== null){
-//		 	this.failureMessage += &quot;statusHeader got null status&quot;;
-//		 	return;
-//		 }
+		if(status== null){
+		 	this.failureMessage += &quot;statusHeader got null status&quot;;
+		 	return;
+		 }
 		if(status.equals(false)){
 			this.failureMessage += &quot;The request returned with a false status \n\n&quot;;
 		}
 	}
 
 	public void dataIsCollection(AbstractCollection map, String fields, String returnedMessage){
-		assert map != null;
-		assert fields != null;
-		assert returnedMessage != null;
-//		if(map == null || fields == null || returnedMessage == null){
-//		 	this.failureMessage += &quot;dataCollection got null values&quot;;
-//		 	return;
-//		 }
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataCollection got null values&quot;;
+		 	return;
+		 }
 		if(!map.containsAll(fields.split())){
 			 this.failureMessage += returnedMessage;
 		}
@@ -114,21 +115,19 @@ class ResponseChecker{
 	
 
 	public void dataIsLazyMap(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
-		assert map != null;
-		assert fields != null;
-		assert returnedMessage != null;
-//		if(map == null || fields == null || returnedMessage == null){
-//		 	this.failureMessage += &quot;dataIsLazyMap got null values&quot;;
-//		 	return;
-//		 }
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyMap got null values&quot;;
+		 	return;
+		 }
 		if(!map.keySet().containsAll(fields.split())){
 			 this.failureMessage += returnedMessage;
 		}
 	}
 	public void dataIsLazyMapArray(List Arr, String fields, String returnedMessage){
-		assert Arr != null;
-		assert fields != null;
-		assert returnedMessage != null;
+		if(Arr == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyMapArray got null values&quot;;
+		 	return;
+		 }
 		String [] ary = fields.split();
 		
 		for(String field : ary){
@@ -139,13 +138,10 @@ class ResponseChecker{
 	}
 
 	public void dataIsLazyKeySet(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
-		assert map != null;
-		assert fields != null;
-		assert returnedMessage != null;
-//		if(map == null || fields == null || returnedMessage == null){
-//		 	this.failureMessage += &quot;dataIsLazyKeySet got null values&quot;;
-//		 	return;
-//		 }
+		if(map == null || fields == null || returnedMessage == null){
+		 	this.failureMessage += &quot;dataIsLazyKeySet got null values&quot;;
+		 	return;
+		 }
 		String fieldsToCheck = fields.split(&quot;/&quot;);
 		if(!map.containsAll(fieldsToCheck)){
 			 this.failureMessage += returnedMessage;
@@ -153,9 +149,10 @@ class ResponseChecker{
 	}
 
 	public void dataIsString(String data, String fields, String msg){
-		assert data != null;
-		assert toCheck != null;
-
+		if(data == null || fields == null || msg == null){
+		 	this.failureMessage += &quot;dataIsString got null values&quot;;
+		 	return;
+		 }
 		String [] ary = fields.split();
 		for(String field : ary){
 			if(!data.contains(field)){
@@ -169,18 +166,20 @@ class ResponseChecker{
 	}
 	
 	public void databaseNotEquals(String oldValue,String newValue, String msg){
-		assert newValue != null;
-		assert oldValue != null;
-		assert msg != null;
+		if(msg == null || oldValue == null || newValue == null){
+		 	this.failureMessage += &quot;databaseNotEquals got null values&quot;;
+		 	return;
+		 }
 		if(oldValue.equals(newValue)){
 			this.failureMessage += msg;
 		}
 	}
 
 	public void databaseEquals(String oldValue,String newValue, String msg){
-		assert newValue != null;
-		assert oldValue != null;
-		assert msg != null;
+		if(msg == null || oldValue == null || newValue == null){
+		 	this.failureMessage += &quot;databaseNotEquals got null values&quot;;
+		 	return;
+		 }
 		if(!oldValue.equals(newValue)){
 			this.failureMessage += msg;
 		}
@@ -234,7 +233,7 @@ class ResponseChecker{
         <boolProp name="useExpires">true</boolProp>
       </CacheManager>
       <hashTree/>
-      <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="false">
+      <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
         <boolProp name="autocommit">true</boolProp>
         <stringProp name="checkQuery"></stringProp>
         <stringProp name="connectionAge">5000</stringProp>
@@ -251,6 +250,24 @@ class ResponseChecker{
         <stringProp name="username">sqladmin</stringProp>
       </JDBCDataSource>
       <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ReciveUserToken" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
+          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\ExtractUserTokenJDBC.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
+      </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="CatagoriesByTopTag" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -264,6 +281,15 @@ class ResponseChecker{
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+          <stringProp name="maximumValue">10</stringProp>
+          <stringProp name="minimumValue">5</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">catagoryNumber</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
         <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
@@ -271,10 +297,6 @@ class ResponseChecker{
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="script">vars.put(&apos;Token&apos;,props.get(&apos;Token&apos;));</stringProp>
         </JSR223PreProcessor>
-        <hashTree/>
-        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="false">
-          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\extractOldUserTokenJDBC.jmx</stringProp>
-        </IncludeController>
         <hashTree/>
         <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
           <collectionProp name="HeaderManager.headers">
@@ -294,7 +316,7 @@ class ResponseChecker{
             <collectionProp name="Arguments.arguments">
               <elementProp name="selectTop" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">1</stringProp>
+                <stringProp name="Argument.value">${catagoryNumber}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">selectTop</stringProp>
@@ -316,7 +338,7 @@ class ResponseChecker{
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="false">
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
             <stringProp name="dataSource">test</stringProp>
             <stringProp name="query">select top 1 PasswordChanged from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
             <stringProp name="queryArguments"></stringProp>
@@ -379,24 +401,24 @@ def catagoryLevel = null;
 
 JsonSlurper JSON = new JsonSlurper ();
 def checker = props.get(&apos;JsonChecker&apos;);
-
 	try {
-	    jsonResponse = JSON.parseText(prev.getResponseDataAsString());
-	    } catch (Exception e) {
+      jsonResponse = JSON.parseText(prev.getResponseDataAsString());
+      } catch (Exception e) {
 	    failureMessage += &quot;Invalid JSON.\n&quot;
 	    AssertionResult.setFailureMessage(failureMessage);
 	    AssertionResult.setFailure(true);  
 	}
-	
+	//jsonResponse = checker.getJsonResponse(prev);
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
 	checker.ConfigStatusAndData(jsonResponse);
 	catagoryLevel = jsonResponse.get(&apos;data&apos;);
-	checker.dataIsLazyMapArray(catagoryLevel,&quot;tagName tagId tagCategoryInfo&quot;, &quot;the getCatagoriesTopTag response doesn&apos;t contain the catagory information properties&quot;);
+	checker.dataIsLazyMapArray(catagoryLevel,&quot;tagName tagId tagCategoryInfo&quot;, &quot;the top catagory has a wrong response properties&quot;);
 	catagoryLevel = catagoryLevel.first().get(&apos;tagCategoryInfo&apos;);
 	checker.dataIsLazyMapArray(catagoryLevel,&quot;categoryId categoryTagSort categories&quot;,&quot;the catagories within the TopTag response doesn&apos;t contain the right properties&quot;);
 	catagoryLevel = catagoryLevel.first().get(&apos;categories&apos;);
      checker.dataIsLazyMap(catagoryLevel,&quot;categoryId categoryName variants&quot;,&quot;the catagories themselves doesn&apos;t contain the right properties&quot;);
+
 	failureMessage = checker.getFailureMassage();	
 	// Print error messages if any
 	if (failureMessage?.trim()) {
@@ -456,6 +478,19 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <hashTree/>
         </hashTree>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="CategoryHeader" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

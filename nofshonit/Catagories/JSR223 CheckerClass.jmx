@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137">
+  <hashTree>
+    <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+    <hashTree>
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+        <stringProp name="scriptLanguage">groovy</stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="script">import groovy.json.JsonSlurper;
+
+class ResponseChecker{
+	String failureMessage = &apos;&apos;;
+	JsonSlurper JSON = new JsonSlurper();
+
+
+	public def getJsonResponse(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev){
+		def jsonResponse = null;
+		try {
+	    jsonResponse = this.JSON.parseText(prev.getResponseDataAsString());
+	    org.apache.log4j.Logger.error(jsonResponse);
+	    } catch (Exception e) {
+	    this.failureMessage += &quot;Invalid JSON.\n&quot;   
+	}
+	
+	return this.failureMessage == &apos;&apos;? jsonResponse: failureMessage;
+	}
+	
+	public void getStatusCode(org.apache.jmeter.protocol.http.sampler.HTTPSampleResult prev, String requiredStatus){
+		assert prev != null;
+		assert requiredStatus != null;
+		if(!requiredStatus.equals(prev.getResponseCode())){
+			this.failureMessage = &quot;Expected &lt;response code&gt; &quot;+ requiredStatus+&quot; but we got instead [&quot; + prev.getResponseCode() + &quot;]\n\n&quot; ;
+	    }
+	}
+
+	public void jsonConfig(AbstractCollection collection){
+		assert collection != null;
+//		 if(collection == null){
+//		 	this.failureMessage += &quot;jsonConfig got null collection&quot;;
+//		 	return;
+//		 }
+		if (!collection.keyset().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+		}
+	}
+
+	public void ConfigStatusAndData(groovy.json.internal.LazyMap jsonResponse){
+			assert jsonResponse != null;
+//			if(jsonResponse == null){
+//		 	this.failureMessage += &quot;jsonConfigMap got null map&quot;;
+//		 	return;
+//		 }
+		if (!jsonResponse.keySet().containsAll([&quot;data&quot;,&quot;status&quot;] )) {
+	          this.failureMessage += &quot;The json config element has wrong structure.\n\n&quot;;
+	     }
+	}
+
+	public void getStatusHeader(Boolean status){
+		assert status != null;
+//		if(status== null){
+//		 	this.failureMessage += &quot;statusHeader got null status&quot;;
+//		 	return;
+//		 }
+		if(status.equals(false)){
+			this.failureMessage += &quot;The request returned with a false status \n\n&quot;;
+		}
+	}
+
+	public void dataIsCollection(AbstractCollection map, String fields, String returnedMessage){
+		assert map != null;
+		assert fields != null;
+		assert returnedMessage != null;
+//		if(map == null || fields == null || returnedMessage == null){
+//		 	this.failureMessage += &quot;dataCollection got null values&quot;;
+//		 	return;
+//		 }
+		if(!map.containsAll(fields.split())){
+			 this.failureMessage += returnedMessage;
+		}
+		//org.apache.log4j.Logger.error(map.containsAll(fields.split()))
+	}
+	
+
+	public void dataIsLazyMap(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
+		assert map != null;
+		assert fields != null;
+		assert returnedMessage != null;
+//		if(map == null || fields == null || returnedMessage == null){
+//		 	this.failureMessage += &quot;dataIsLazyMap got null values&quot;;
+//		 	return;
+//		 }
+		if(!map.keySet().containsAll(fields.split())){
+			 this.failureMessage += returnedMessage;
+		}
+	}
+	public void dataIsLazyMapArray(List Arr, String fields, String returnedMessage){
+		assert Arr != null;
+		assert fields != null;
+		assert returnedMessage != null;
+		String [] ary = fields.split();
+		
+		for(String field : ary){
+			if(!Arr.every{it.containsKey(field)}){
+				this.failureMessage +=  returnedMessage;
+			}
+		}
+	}
+
+	public void dataIsLazyKeySet(groovy.json.internal.LazyMap map, String fields, String returnedMessage){
+		assert map != null;
+		assert fields != null;
+		assert returnedMessage != null;
+//		if(map == null || fields == null || returnedMessage == null){
+//		 	this.failureMessage += &quot;dataIsLazyKeySet got null values&quot;;
+//		 	return;
+//		 }
+		String fieldsToCheck = fields.split(&quot;/&quot;);
+		if(!map.containsAll(fieldsToCheck)){
+			 this.failureMessage += returnedMessage;
+		}
+	}
+
+	public void dataIsString(String data, String fields, String msg){
+		assert data != null;
+		assert toCheck != null;
+
+		String [] ary = fields.split();
+		for(String field : ary){
+			if(!data.contains(field)){
+		 	this.failureMessage += msg +&quot;\n\n&quot;;
+			}
+		}
+		
+//		if(!data.contains(toCheck)){
+//		 	this.failureMessage += &quot;The request returned without a valid fields (String data) \n\n&quot;;
+//		}
+	}
+	
+	public void databaseNotEquals(String oldValue,String newValue, String msg){
+		assert newValue != null;
+		assert oldValue != null;
+		assert msg != null;
+		if(oldValue.equals(newValue)){
+			this.failureMessage += msg;
+		}
+	}
+
+	public void databaseEquals(String oldValue,String newValue, String msg){
+		assert newValue != null;
+		assert oldValue != null;
+		assert msg != null;
+		if(!oldValue.equals(newValue)){
+			this.failureMessage += msg;
+		}
+	}
+
+	public String getFailureMassage(){
+		return this.failureMessage;
+	}
+
+	}
+
+	ResponseChecker JsonChecker = new ResponseChecker();
+	vars.putObject(&apos;JsonChecker&apos;,JsonChecker);
+	props.put(&apos;JsonChecker&apos;,JsonChecker);
+
+</stringProp>
+      </JSR223PreProcessor>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
