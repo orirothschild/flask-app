@@ -23,11 +23,6 @@
             <stringProp name="Argument.value">38</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="Token" elementType="Argument">
-            <stringProp name="Argument.name">Token</stringProp>
-            <stringProp name="Argument.value">elUWUr6cin9svwE4fDLSkyAiemcvJ72LOn0QHCbbPygCItzTQoxhnnaGzipwvlJbAmrMIROtOt3dJwVL1fLhViu/9AiW3WTddkhvFCMD+ffn27p60j7OrPHbnBFInaD6OjZ9JI51z6vJXhb6dFH2oIqKpN6g8LaIlz63kGKdPJ1+1pUs8J091vsny+BUetNDYLtRitFGA/zRQQGRZbYfNMx2Bm/NrNLUbI12qEkj5WtLMrGm57Oy+9f8fOqbZdXQSzv2KzrFju+CbU+RtPK7Ln96UnLrpaGA0AYeRJ/Uih//X7gB1imbYhThl6E45CcWKdGUTZeX7hQZe2jRFKbtuIAVGAawwwtopb6rasjI73cLvf1v4CnDhnCPRnU514hZFcRLvHjmvOvBPHcyOrn9hofhcSxYq7YqHlEVh9HpNBZc3K6yuA8pAi7uZYJyTTXlzBLDPwbQWAuKY7YTTOLhcp4p5ObDyAT42xUMJDTK778n0dCkcPHhl3snNFHLX5RhTb5ZpKJaDF3L07xanEk9JDiBpgALlMbvwGTUghFXa4x3OoyUlZhj68PuTI1TFJT3DYdDYyfejOWoEAHY8w/YjoU1pglCwuDFkZ8WjgsPfy5uLAQfuiyhaQ+EmLpojZjSuQBkYZ4zVF2KVOkpO9GDoF79ArnRFCRjrHSSUa4wXWOhQIfJ89xC0MwFy8yB2e8p5hPrzPWiTu/3kYvfaAARiDay60eruIkceNnmuCAfpWl/21L6460mee+hAdrbk2TIWiPBfEFY6+iP7b48hAQQ4o/h1zO1yJdoLqt92UVUCbZxhWvUaTOx+jG8X3ZOdfc2mae7kTsD7cl6lI4BwuFXjgiZ/xsdWZcUefYj8K7667ifYOJ5fVqsKBOEoJbkIn6BPtedy9etSreIyQVQ0uuc77zGgAmdOtkHJiv3Sf3CoslWQgMu24aX+0cnXgeqTKV7</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -269,7 +264,7 @@ class ResponseChecker{
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;:&quot;orir@dts-4u.com&quot;,&#xd;
+	&quot;email&quot;:&quot;ori.TEST@dts-4u.com&quot;,&#xd;
 	&quot;password&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;PasswordConfirmation&quot;:&quot;978645312Or&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
@@ -376,7 +371,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
         </hashTree>
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="UserToken conformation" enabled="true">
           <stringProp name="dataSource">test</stringProp>
-          <stringProp name="query">select top 10 Active,UserToken from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
+          <stringProp name="query">select top 10 Active,UserToken from NofshonitClub..AllMembers where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
           <stringProp name="queryArguments"></stringProp>
           <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
@@ -562,6 +557,43 @@ def checker = props.get(&apos;JsonChecker&apos;);
           </ResultCollector>
           <hashTree/>
         </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Validation" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -576,20 +608,6 @@ def checker = props.get(&apos;JsonChecker&apos;);
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
-          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\extractOldUserTokenJDBC.jmx</stringProp>
-        </IncludeController>
-        <hashTree/>
-        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
-          <boolProp name="clearEachIteration">true</boolProp>
-          <boolProp name="useExpires">true</boolProp>
-        </CacheManager>
-        <hashTree/>
-        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
-          <collectionProp name="CookieManager.cookies"/>
-          <boolProp name="CookieManager.clearEachIteration">true</boolProp>
-        </CookieManager>
-        <hashTree/>
         <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
           <boolProp name="autocommit">true</boolProp>
           <stringProp name="checkQuery"></stringProp>
@@ -607,14 +625,40 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <stringProp name="username">sqladmin</stringProp>
         </JDBCDataSource>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="false">
+        <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
+          <boolProp name="clearEachIteration">true</boolProp>
+          <boolProp name="useExpires">true</boolProp>
+        </CacheManager>
+        <hashTree/>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="false">
+          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\ExtractUserTokenJDBC.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
+          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\extractValidateTokenJDBC.jmx</stringProp>
+        </IncludeController>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">vars.put(&quot;Token&quot;,props.get(&quot;Token&quot;));
+String [] words = props.get(&quot;ValidateToken&quot;).split(&apos;=&apos;, 4);
+String  actualToken = words[3].split(&apos;&quot;&gt;&apos;, 2)[0];
+
+vars.put(&apos;validateToken&apos;,actualToken);
+props.put(&apos;validateToken&apos;,actualToken);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateUser" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;Token&quot;:&quot;${Token}&quot;}&#xd;
-&#xd;
+                <stringProp name="Argument.value">{&quot;Token&quot;:&quot;${validateToken}&quot;}&#xd;
 &#xd;
 </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -722,8 +766,8 @@ def checker = props.get(&apos;JsonChecker&apos;);
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;: &quot;ori.r@ls-techs.com&quot;,&#xd;
-	&quot;password&quot;: &quot;2&quot;,&#xd;
+	&quot;email&quot;: &quot;${email}&quot;,&#xd;
+	&quot;password&quot;: &quot;978645312Or&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
 	&quot;PrivateOrBusiness&quot;:1&#xd;
 }&#xd;

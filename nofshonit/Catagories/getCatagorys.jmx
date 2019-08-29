@@ -25,12 +25,7 @@
           </elementProp>
           <elementProp name="id" elementType="Argument">
             <stringProp name="Argument.name">id</stringProp>
-            <stringProp name="Argument.value">10000000425</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="Token" elementType="Argument">
-            <stringProp name="Argument.name">Token</stringProp>
-            <stringProp name="Argument.value">null</stringProp>
+            <stringProp name="Argument.value">10000000434</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -409,7 +404,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	    AssertionResult.setFailure(true);  
 	}
 	//jsonResponse = checker.getJsonResponse(prev);
-	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusCode(prev,&quot;201&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
 	checker.ConfigStatusAndData(jsonResponse);
 	catagoryLevel = jsonResponse.get(&apos;data&apos;);
