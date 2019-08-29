@@ -217,6 +217,18 @@ class ResponseChecker{
         </collectionProp>
       </HeaderManager>
       <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+        <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/emailPasswordRegister.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames"></stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Registeration" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -257,6 +269,18 @@ class ResponseChecker{
           <stringProp name="username">sqladmin</stringProp>
         </JDBCDataSource>
         <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+          <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/emailPasswordRegister.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Register" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -264,9 +288,9 @@ class ResponseChecker{
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;:&quot;ori.TEST@dts-4u.com&quot;,&#xd;
-	&quot;password&quot;:&quot;978645312Or&quot;,&#xd;
-	&quot;PasswordConfirmation&quot;:&quot;978645312Or&quot;,&#xd;
+	&quot;email&quot;:&quot;${email}&quot;,&#xd;
+	&quot;password&quot;:&quot;${password}&quot;,&#xd;
+	&quot;PasswordConfirmation&quot;:&quot;${password}&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
 	&quot;PrivateOrBusiness&quot;:1,&#xd;
 	&quot;AllowSmsAndMail&quot;:false&#xd;
@@ -625,6 +649,18 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <stringProp name="username">sqladmin</stringProp>
         </JDBCDataSource>
         <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="false">
+          <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/email.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
         <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP Cache Manager" enabled="true">
           <boolProp name="clearEachIteration">true</boolProp>
           <boolProp name="useExpires">true</boolProp>
@@ -767,7 +803,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;email&quot;: &quot;${email}&quot;,&#xd;
-	&quot;password&quot;: &quot;978645312Or&quot;,&#xd;
+	&quot;password&quot;: &quot;${password}&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
 	&quot;PrivateOrBusiness&quot;:1&#xd;
 }&#xd;
