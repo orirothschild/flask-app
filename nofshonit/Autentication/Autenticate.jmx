@@ -5,7 +5,7 @@
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="site" elementType="Argument">
@@ -44,7 +44,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.*; 
 class LineChanger{
 	public void changeLine(int lineNumber, String data) throws IOException {
-    Path path = Paths.get(&quot;C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files&quot;,&quot;currentPassword.csv&quot;);
+    Path path = Paths.get(&quot;C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files&quot;,&quot;id.csv&quot;);
     List&lt;String&gt; lines = Files.readAllLines(path, StandardCharsets.UTF_8);
     lines.set(lineNumber - 1, data);
     Files.write(path, lines, StandardCharsets.UTF_8);
@@ -247,7 +247,7 @@ class ResponseChecker{
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set currentPassword" enabled="true">
         <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/currentPassword.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames"></stringProp>
@@ -259,7 +259,7 @@ class ResponseChecker{
         <stringProp name="shareMode">shareMode.all</stringProp>
       </CSVDataSet>
       <hashTree/>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Email" enabled="true">
         <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/Email.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames"></stringProp>
@@ -368,6 +368,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	vars.putObject(&apos;statusResult&apos;,jsonResponse.get(&apos;status&apos;));
 	checker.ConfigStatusAndData(jsonResponse);
 	checker.dataIsCollection(jsonResponse.get(&apos;data&apos;).keySet(),&quot;id firstName lastName token premiumType&quot;,&quot;the required request dont contain the right autentication properties \n\n&quot;);
 	failureMessage = checker.getFailureMassage();
@@ -567,7 +568,22 @@ def checker = props.get(&apos;JsonChecker&apos;);
           </JSR223PostProcessor>
           <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="replace old id with new id in csv" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+def checker = props.get(&apos;JsonChecker&apos;);
+def LineChanger = props.get(&apos;LineChanger&apos;);
+log.info(vars.get(&apos;statusResult&apos;));
+if(vars.getObject(&apos;statusResult&apos;)){
+	 LineChanger.changeLine(2,vars.get(&apos;id&apos;));
+}
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
@@ -655,7 +671,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">20</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -693,7 +709,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="script">vars.put(&quot;Token&quot;,props.get(&quot;Token&quot;));
+          <stringProp name="script">
 String [] words = props.get(&quot;ValidateToken&quot;).split(&apos;=&apos;, 4);
 String  actualToken = words[3].split(&apos;&quot;&gt;&apos;, 2)[0];
 
@@ -756,7 +772,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	checker.getStatusCode(prev,&quot;200&quot;);
 	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
 	checker.ConfigStatusAndData(jsonResponse);
-	checker.dataIsString(jsonResponse.get(&apos;message&apos;),&quot;תודה להרשמתך למועדו&quot;,&quot; the message response msg dosent contain the right fields&quot;);
+	checker.dataIsString(jsonResponse.get(&apos;message&apos;),&quot;Register&quot;,&quot; the message response msg dosent contain the right fields&quot;);
 	failureMessage = checker.getFailureMassage();
 	
 	// Print error messages if any
@@ -771,45 +787,45 @@ def checker = props.get(&apos;JsonChecker&apos;);
 	</stringProp>
           </JSR223Assertion>
           <hashTree/>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -953,7 +969,7 @@ def checker = props.get(&apos;JsonChecker&apos;);
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Token</stringProp>
-                <stringProp name="Header.value">ya29.GltxB1HMXmQ_mg4fJ68vAcdWF_OxxLCjIeWRzMc_FtrBHao63gheZWYHdhFM3fc0V0QM23qMneJrlUhgx1Xl61W3SYG8g7o3I9on5y2qlQRV1Xe0_EyOaJ8mdWjH</stringProp>
+                <stringProp name="Header.value">EAArU6rU8F9kBAGl5QiXnpKUojZAYfK6GL0rDbZBJQqo9jZAZAVZA7VKhPJd4POZBZCZBc7LqQoDGTwnhGDfKxBpUcuPMyKaIwF2Bf4anZCgnTL8yE1RXrqlXdWNlOCNa9c6gL5LIWuZBtKZCLHMDiGZAbc2HGmA4mjEUcbgzL2UFioGrvZCgLBaMGHg6cEIHPvszLh8Kb4CRksEerdwZDZD</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -1298,13 +1314,13 @@ def checker = props.get(&apos;JsonChecker&apos;);
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Token</stringProp>
-                <stringProp name="Header.value">ya29.GltxB1HMXmQ_mg4fJ68vAcdWF_OxxLCjIeWRzMc_FtrBHao63gheZWYHdhFM3fc0V0QM23qMneJrlUhgx1Xl61W3SYG8g7o3I9on5y2qlQRV1Xe0_EyOaJ8mdWjH</stringProp>
+                <stringProp name="Header.value">ya29.Glt2B78_o1F8aUHVcDQWMVIQG6dzgIvzVVGfh_y6cl7p0HsMsvQSNYZ7CnoJqH4g19IqrpZwti6pY3KC4SjrgsEf31Y8UZpHqYzJe5w-2QcHHOgoeZ0s-OpJ8oAQ</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
           <boolProp name="displayJMeterProperties">true</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
@@ -1349,6 +1365,117 @@ def checker = props.get(&apos;JsonChecker&apos;);
           <hashTree/>
         </hashTree>
       </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

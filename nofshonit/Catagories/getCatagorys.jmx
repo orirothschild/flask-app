@@ -33,7 +33,7 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 utility class" enabled="true">
         <stringProp name="scriptLanguage">groovy</stringProp>
         <stringProp name="parameters"></stringProp>
         <stringProp name="filename"></stringProp>
@@ -258,7 +258,7 @@ class ResponseChecker{
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller" enabled="true">
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="userTokenExtraction" enabled="true">
           <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\ExtractUserTokenJDBC.jmx</stringProp>
         </IncludeController>
         <hashTree/>
@@ -279,7 +279,7 @@ class ResponseChecker{
         <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
           <stringProp name="maximumValue">10</stringProp>
           <stringProp name="minimumValue">5</stringProp>
-          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="outputFormat">0</stringProp>
           <boolProp name="perThread">false</boolProp>
           <stringProp name="randomSeed"></stringProp>
           <stringProp name="variableName">catagoryNumber</stringProp>
@@ -333,7 +333,7 @@ class ResponseChecker{
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="false">
             <stringProp name="dataSource">test</stringProp>
             <stringProp name="query">select top 1 PasswordChanged from NofshonitClub..AllMembers  where MemberId = &apos;${id}&apos; order by RegistrationDate desc</stringProp>
             <stringProp name="queryArguments"></stringProp>
@@ -344,6 +344,51 @@ class ResponseChecker{
             <stringProp name="resultVariable"></stringProp>
             <stringProp name="variableNames">currentPasswordChange</stringProp>
           </JDBCPostProcessor>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import groovy.json.JsonSlurper;
+
+def failureMessage = &quot;&quot;;
+def jsonResponse = null;
+String message = null;
+def catagoryLevel = null;
+
+JsonSlurper JSON = new JsonSlurper ();
+def checker = props.get(&apos;JsonChecker&apos;);
+	try {
+      jsonResponse = JSON.parseText(prev.getResponseDataAsString());
+      } catch (Exception e) {
+	    failureMessage += &quot;Invalid JSON.\n&quot;
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);  
+	}
+	//jsonResponse = checker.getJsonResponse(prev);
+	checker.getStatusCode(prev,&quot;200&quot;);
+	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
+	checker.ConfigStatusAndData(jsonResponse);
+	catagoryLevel = jsonResponse.get(&apos;data&apos;);
+	checker.dataIsLazyMapArray(catagoryLevel,&quot;tagName tagId tagCategoryInfo&quot;, &quot;the top catagory has a wrong response properties&quot;);
+	catagoryLevel = catagoryLevel.first().get(&apos;tagCategoryInfo&apos;);
+	checker.dataIsLazyMapArray(catagoryLevel,&quot;categoryId categoryTagSort categories&quot;,&quot;the catagories within the TopTag response doesn&apos;t contain the right properties&quot;);
+	catagoryLevel = catagoryLevel.first().get(&apos;categories&apos;);
+     checker.dataIsLazyMap(catagoryLevel,&quot;categoryId categoryName variants&quot;,&quot;the catagories themselves doesn&apos;t contain the right properties&quot;);
+
+	failureMessage = checker.getFailureMassage();	
+	// Print error messages if any
+	if (failureMessage?.trim()) {
+	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
+	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
+	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
+	
+	    AssertionResult.setFailureMessage(failureMessage);
+	    AssertionResult.setFailure(true);    
+	}
+	</stringProp>
+          </JSR223Assertion>
           <hashTree/>
           <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -381,51 +426,6 @@ class ResponseChecker{
             </objProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
-          <hashTree/>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import groovy.json.JsonSlurper;
-
-def failureMessage = &quot;&quot;;
-def jsonResponse = null;
-String message = null;
-def catagoryLevel = null;
-
-JsonSlurper JSON = new JsonSlurper ();
-def checker = props.get(&apos;JsonChecker&apos;);
-	try {
-      jsonResponse = JSON.parseText(prev.getResponseDataAsString());
-      } catch (Exception e) {
-	    failureMessage += &quot;Invalid JSON.\n&quot;
-	    AssertionResult.setFailureMessage(failureMessage);
-	    AssertionResult.setFailure(true);  
-	}
-	//jsonResponse = checker.getJsonResponse(prev);
-	checker.getStatusCode(prev,&quot;201&quot;);
-	checker.getStatusHeader(jsonResponse.get(&apos;status&apos;));
-	checker.ConfigStatusAndData(jsonResponse);
-	catagoryLevel = jsonResponse.get(&apos;data&apos;);
-	checker.dataIsLazyMapArray(catagoryLevel,&quot;tagName tagId tagCategoryInfo&quot;, &quot;the top catagory has a wrong response properties&quot;);
-	catagoryLevel = catagoryLevel.first().get(&apos;tagCategoryInfo&apos;);
-	checker.dataIsLazyMapArray(catagoryLevel,&quot;categoryId categoryTagSort categories&quot;,&quot;the catagories within the TopTag response doesn&apos;t contain the right properties&quot;);
-	catagoryLevel = catagoryLevel.first().get(&apos;categories&apos;);
-     checker.dataIsLazyMap(catagoryLevel,&quot;categoryId categoryName variants&quot;,&quot;the catagories themselves doesn&apos;t contain the right properties&quot;);
-
-	failureMessage = checker.getFailureMassage();	
-	// Print error messages if any
-	if (failureMessage?.trim()) {
-	    failureMessage += &quot;URL: &quot; + SampleResult.getURL() + &quot;\n\n&quot;;     
-	    failureMessage += &quot;JSON RESPONSE: &quot; + jsonResponse + &quot;\n\n&quot;;
-	    failureMessage += &quot;REQUEST HEADERS: &quot; + SampleResult.getRequestHeaders() + &quot;\n\n&quot;;
-	
-	    AssertionResult.setFailureMessage(failureMessage);
-	    AssertionResult.setFailure(true);    
-	}
-	</stringProp>
-          </JSR223Assertion>
           <hashTree/>
         </hashTree>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">

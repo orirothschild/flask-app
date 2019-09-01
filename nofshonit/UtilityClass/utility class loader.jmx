@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137">
   <hashTree>
-    <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
     <hashTree>
-      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="utility class" enabled="true">
-        <stringProp name="scriptLanguage">groovy</stringProp>
-        <stringProp name="parameters"></stringProp>
-        <stringProp name="filename"></stringProp>
-        <stringProp name="cacheKey">true</stringProp>
-        <stringProp name="script">import groovy.json.JsonSlurper;
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="line checker" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.FileWriter;
+import java.util.Arrays;
+import java.io.Writer;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.io.*; 
+class LineChanger{
+	public void changeLine(int lineNumber, String data) throws IOException {
+    Path path = Paths.get(&quot;C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files&quot;,&quot;currentPassword.csv&quot;);
+    List&lt;String&gt; lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+    lines.set(lineNumber - 1, data);
+    Files.write(path, lines, StandardCharsets.UTF_8);
+		}
+	}
+
+LineChanger LineChange = new LineChanger();
+vars.putObject(&apos;LineChanger&apos;,LineChange);
+props.put(&apos;LineChanger&apos;,LineChange);
+
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="utility class" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import groovy.json.JsonSlurper;
 
 class ResponseChecker{
 	String failureMessage = &apos;&apos;;
@@ -58,10 +99,11 @@ class ResponseChecker{
 	}
 
 	public void getStatusHeader(Boolean status){
-		if(status== null){
+		if(status == null){
 		 	this.failureMessage += &quot;statusHeader got null status&quot;;
 		 	return;
-		 }
+		 }	
+		 
 		if(status.equals(false)){
 			this.failureMessage += &quot;The request returned with a false status \n\n&quot;;
 		}
@@ -161,8 +203,9 @@ class ResponseChecker{
 	props.put(&apos;JsonChecker&apos;,JsonChecker);
 
 </stringProp>
-      </JSR223PreProcessor>
-      <hashTree/>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
