@@ -3,7 +3,7 @@
   <hashTree>
     <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
     <hashTree>
-      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="utility class" enabled="true">
         <stringProp name="scriptLanguage">groovy</stringProp>
         <stringProp name="parameters"></stringProp>
         <stringProp name="filename"></stringProp>
@@ -89,7 +89,7 @@ class ResponseChecker{
 		}
 	}
 	public void dataIsLazyMapArray(List Arr, String fields, String returnedMessage){
-		if(map == null || fields == null || returnedMessage == null){
+		if(Arr == null || fields == null || returnedMessage == null){
 		 	this.failureMessage += &quot;dataIsLazyMapArray got null values&quot;;
 		 	return;
 		 }

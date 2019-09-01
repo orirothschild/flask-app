@@ -28,7 +28,37 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="link checker" enabled="true">
+        <stringProp name="scriptLanguage">groovy</stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="cacheKey">true</stringProp>
+        <stringProp name="script">import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.FileWriter;
+import java.util.Arrays;
+import java.io.Writer;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.io.*; 
+class LineChanger{
+	public void changeLine(int lineNumber, String data) throws IOException {
+    Path path = Paths.get(&quot;C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files&quot;,&quot;currentPassword.csv&quot;);
+    List&lt;String&gt; lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+    lines.set(lineNumber - 1, data);
+    Files.write(path, lines, StandardCharsets.UTF_8);
+		}
+	}
+
+LineChanger LineChange = new LineChanger();
+vars.putObject(&apos;LineChanger&apos;,LineChange);
+props.put(&apos;LineChanger&apos;,LineChange);
+
+</stringProp>
+      </JSR223PreProcessor>
+      <hashTree/>
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="utility class checker" enabled="true">
         <stringProp name="scriptLanguage">groovy</stringProp>
         <stringProp name="parameters"></stringProp>
         <stringProp name="filename"></stringProp>
@@ -230,7 +260,7 @@ class ResponseChecker{
       </CSVDataSet>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-        <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/email.csv</stringProp>
+        <stringProp name="filename">C:/Users/orir/Desktop/automation 2019/JmeterCi/nofshonit/CSV Files/Email.csv</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames"></stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -288,7 +318,7 @@ class ResponseChecker{
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;:&quot;${email}&quot;,&#xd;
+	&quot;email&quot;:&quot;${Email}&quot;,&#xd;
 	&quot;password&quot;:&quot;${currentPassword}&quot;,&#xd;
 	&quot;PasswordConfirmation&quot;:&quot;${currentPassword}&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
@@ -779,15 +809,15 @@ def checker = props.get(&apos;JsonChecker&apos;);
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ValidateEmail" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;email&quot;: &quot;${email}&quot;,&#xd;
-	&quot;password&quot;: &quot;${password}&quot;,&#xd;
+	&quot;email&quot;: &quot;${Email}&quot;,&#xd;
+	&quot;password&quot;: &quot;${currentPassword}&quot;,&#xd;
 	&quot;LoginType&quot;:1,&#xd;
 	&quot;PrivateOrBusiness&quot;:1&#xd;
 }&#xd;
