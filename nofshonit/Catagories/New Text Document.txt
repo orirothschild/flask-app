@@ -1,0 +1,3 @@
+C:
+\Users\orir\Desktop\automation 2019\apache-jmeter-5.1.1\bin
+jmeter -Jjmeter.save.saveservice.output_format=xml -n -t "\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\Catagories\getCatagorys.jmx" -l \Users\orir\Desktop\data.csv
