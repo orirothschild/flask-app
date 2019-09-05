@@ -700,10 +700,6 @@ if(vars.getObject(&apos;statusResult&apos;)){
           <boolProp name="useExpires">true</boolProp>
         </CacheManager>
         <hashTree/>
-        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include Controller extractValidateToken" enabled="false">
-          <stringProp name="IncludeController.includepath">C:\Users\orir\Desktop\automation 2019\JmeterCi\nofshonit\JDBC TestFragments\extractValidateTokenJDBC.jmx</stringProp>
-        </IncludeController>
-        <hashTree/>
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="extractValidateToken" enabled="true">
           <stringProp name="dataSource">test</stringProp>
           <stringProp name="queryType">Select Statement</stringProp>
