@@ -1,0 +1,21 @@
+Started by user [8mha:////4C5RC6GcucULwz4N/QzWgrClNOpRiryNZc2cjL8mZwQEAAAAlR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZO/dLi1CL9/KJMAFtjI72+AAAA[0mori rothschild
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/aws backup
+[SSH] script:
+MYSQL_HOST="db_host"
+AWS_SECRET_KEY=**********
+MYSQL_PASSWORD=**********
+DATABASE_NAME="testdb"
+AWS_BUCKET_NAME="ori-jenkins-backup"
+
+/tmp/script.sh $MYSQL_HOST  $MYSQL_PASSWORD  $DATABASE_NAME  $AWS_SECRET_KEY  $AWS_BUCKET_NAME
+
+
+[SSH] executing...
+Uploading db-11-29-36.sql db
+Completed 1.8 KiB/1.8 KiB (1.0 KiB/s) with 1 file(s) remainingupload: ../../tmp/db-11-29-36.sql to s3://ori-jenkins-backup/db-11-29-36.sql
+
+[SSH] completed
+[SSH] exit-status: 0
+
+Finished: SUCCESS
