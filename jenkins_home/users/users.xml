@@ -1,0 +1,18 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.model.UserIdMapper>
+  <version>1</version>
+  <idToDirectoryNameMap class="concurrent-hash-map">
+    <entry>
+      <string>ori</string>
+      <string>ori_4531146797934847886</string>
+    </entry>
+    <entry>
+      <string>tal</string>
+      <string>tal_6078069049400637020</string>
+    </entry>
+    <entry>
+      <string>job-executer</string>
+      <string>jobexecuter_105588753118494697</string>
+    </entry>
+  </idToDirectoryNameMap>
+</hudson.model.UserIdMapper>
