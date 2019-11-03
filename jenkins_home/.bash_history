@@ -471,3 +471,6 @@ cd ..
 cd ..
 cd ..
 exit
+cd var/opt/
+ls
+exit
