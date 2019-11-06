@@ -474,3 +474,17 @@ exit
 cd var/opt/
 ls
 exit
+curl git:8090
+curl git:80
+ssh git 
+ssh git 
+ךד
+ls
+exit
+git remote -v
+ls
+cd tmp/
+ls
+cd opt
+cd
+exit

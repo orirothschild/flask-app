@@ -1,0 +1,13 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2019-11-06 08:04:54.516 UTC</timestamp>
+  <md5sum>dec25fc81a62bcb44df74349e83713ce</md5sum>
+  <fileName>Credential id=git_user name=ori/******</fileName>
+  <usages>
+    <entry>
+      <string>maven-job</string>
+      <ranges>28</ranges>
+    </entry>
+  </usages>
+  <facets/>
+</fingerprint>

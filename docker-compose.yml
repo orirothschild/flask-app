@@ -50,7 +50,10 @@ services:
       - '/srv/gitlab/logs:/var/log/gitlab'
       - '/srv/gitlab/data:/var/opt/gitlab'
     networks:
-      - net 
+      - net
+  bitbucket:
+    container_name:bitbucket-server
+    image: bitbucket 
 networks:
   net:
 

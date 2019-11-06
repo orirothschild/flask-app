@@ -6,7 +6,7 @@
   <usages>
     <entry>
       <string>maven-job</string>
-      <ranges>22</ranges>
+      <ranges>22-27</ranges>
     </entry>
   </usages>
   <facets/>
