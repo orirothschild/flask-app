@@ -68,7 +68,6 @@ services:
       - 'BITBUCKET_DELAYED_START='
       - 'DOCKER_WAIT_HOST=postgres_bitbucket'
       - 'DOCKER_WAIT_PORT=5432'
-
   postgres_bitbucket:
     image: blacklabelops/postgres
     networks:
@@ -81,7 +80,18 @@ services:
       - 'POSTGRES_PASSWORD=jellyfish'
       - 'POSTGRES_DB=bitbucketdb'
       - 'POSTGRES_ENCODING=UTF8'
-
+  master:
+    image: vinsdocker/jmmaster
+    container_name: master
+    tty: true
+    hostname: master
+    networks:
+      - net
+  slave:
+    image: vinsdocker/jmserver
+    tty: true
+    networks:
+      - net
 volumes:
   bitbucketdata:
     external: false
