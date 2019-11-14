@@ -1,24 +1,3 @@
-java -version
-docker ps
-exit
-jvav -version
-java -version
-ls
-mkdir jmeterCi
-exit
-docker ps
-ls
-cd
-exit
-remote_user@remote_host
-ssh remote_user@remote_host
-docker ps
-docker.ps
-docker images
-la
-ls
-exit
-ls
 cd tmp/
 ls
 ssh -i remote_user@remote_host
@@ -487,4 +466,35 @@ cd tmp/
 ls
 cd opt
 cd
+exit
+ls
+cd usr/
+ll
+ls
+cd ..
+exit
+cd usr/
+ls
+exit
+Data Source=<IPAddress>\\SQLEXPRESS,49172;Database=<Database name>;User ID=sa;Password=<Your password>;MultipleActiveResultSets=true;
+Data Source=172.29.92.20\sql2005,1433;Database=NofshonitClub;User ID=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;User ID=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;User Id=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;user Id=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;Username=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;Username=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+ls
+select * from Allmembers
+select top 10 PasswordChanged, * from NofshonitClub..AllMembers where email like '%ori.rr%' AND Active = 1;
+select * from Orders
+select * from Orders
+select 
+select * from Orders
+sqlcmd -q "SELECT * FROM Orders"  
+exit
+ls
+Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;Username=sqladmin;Password=Erg0110$;MultipleActiveResultSets=true;
+ping 172.29.92.20
+sudo ping 172.29.92.20
+ ping 172.29.92.20
 exit
