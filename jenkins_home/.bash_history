@@ -1,39 +1,3 @@
-cd tmp/
-ls
-ssh -i remote_user@remote_host
-ssh -i remote-key remote_user@remote_host
-ls
-cd ..
-ls
-exit
-ls
-cd tmp/
-ls
-cd ..
-exit
-ls
-docker ps
-ssh -i remote-key remote_user@remote_host
-ssh -i remote_user@remote_host
-ssh -i remote-key remote_user@remote_host
-ls
-exit
-ssh ori@remote_host
-ssh ori@remote_host
-exit
-ls
-ps
-exit
-docker ps
-ps
-ps
-ls
-ssh ori@remote_host
-ls
-exit
-ssh ori@remote_host
-exit
-ssh ori@remote_host
 exit
 ls
 ssh ori@remote_host
@@ -497,4 +461,40 @@ Server=172.29.92.20\sql2005,1433;Database=NofshonitClub;Username=sqladmin;Passwo
 ping 172.29.92.20
 sudo ping 172.29.92.20
  ping 172.29.92.20
+exit
+ssh remote-host
+exit
+ ssh-keygen -f "/var/jenkins_home/.ssh/known_hosts" -R remote-host
+ssh remote-host
+sudo ssh-keygen -f "/var/jenkins_home/.ssh/known_hosts" -R remote-host
+ssh-keygen -f "/var/jenkins_home/.ssh/known_hosts" -R remote-host
+ssh remote-host
+ssh remote-host
+exit
+ssh ansible
+ssh git-server
+exit
+ssh db
+exit
+ssh remote-host
+exit
+ssh remote-host
+exit
+ssh remote-host
+exit
+ssh remote-host
+exit
+ssh remote-host
+exit
+ssh remote_user@remote_host
+docker ps
+exit
+ls
+cd
+cd ansible/
+ansible-playbook -i hosts people.yml 
+exit
+cd 
+cd ansible/
+ansible-playbook -i hosts people.yml 
 exit
