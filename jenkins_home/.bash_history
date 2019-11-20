@@ -1,12 +1,3 @@
-exit
-ls
-ssh ori@remote_host
-ps
-docker ps
-ls
-exit
-ssh ori@remote_host
-exit
 docker images
 exit
 ls
@@ -497,4 +488,13 @@ exit
 cd 
 cd ansible/
 ansible-playbook -i hosts people.yml 
+exit
+ls
+cd /var/jenkins_home/ansible/
+ls
+pwd people.yml 
+cat people.yml 
+cat table.j2 
+cat people.yml 
+cat hosts 
 exit

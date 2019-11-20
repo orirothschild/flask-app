@@ -17,19 +17,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.76">
-      <scriptText>job(&apos;job_dsl_example&apos;) {
+      <scriptText>job(&apos;job_ansilbe_dsl&apos;) {
 
-    description(&apos;This is my awesome Job&apos;)
+    description(&apos;This is my ansible Job&apos;)
 
 
     parameters {
-        stringParam(&apos;Planet&apos;, defaultValue = &apos;world&apos;, description = &apos;This is the world&apos;)
-        booleanParam(&apos;FLAG&apos;, true)
-        choiceParam(&apos;OPTION&apos;, [&apos;option 1 (default)&apos;, &apos;option 2&apos;, &apos;option 3&apos;])
-    }
-
-    scm {
-        git(&apos;https://github.com/jenkins-docs/simple-java-maven-app&apos;, &apos;master&apos;)
+        choiceParam(&apos;AGE&apos;, [&apos;20&apos;, &apos;21&apos;,&apos;22&apos;,&apos;23&apos;,&apos;24&apos;,&apos;25&apos;])
     }
 
     triggers {
@@ -37,13 +31,49 @@
     }
 
     steps {
-        shell(&quot;&quot;&quot;echo &apos;Hello World&apos;
-				cd usr
-                 cat lazygit.sh&quot;&quot;&quot;)
+
+        wrappers {
+            colorizeOutput(colorMap = &apos;xterm&apos;)
+      }
+        ansiblePlaybook(&apos;/var/jenkins_home/ansible/people.yml&apos;) {
+            inventoryPath(&apos;/var/jenkins_home/ansible/hosts&apos;)
+            colorizedOutput(true)
+            extraVars {
+                extraVar(&quot;PEOPLE_AGE&quot;, &apos;${AGE}&apos;, false)
+            }
+        }
+    }
+}
+
+
+job(&apos;maven_dsl&apos;) {
+
+    description(&apos;Maven dsl project&apos;)
+
+    scm {
+        git(&apos;http://git:80/jenkins/maven-project.git&apos;, &apos;master&apos;, {   
+          node -&gt; node / &apos;extensions&apos; &lt;&lt; &apos;&apos; })
+    }
+
+    steps {
+        maven {
+            mavenInstallation(&apos;jenkins-maven&apos;)
+            goals(&apos;-B -DskipTests clean package&apos;)
+        }
+        maven {
+            mavenInstallation(&apos;jenkins-maven&apos;)
+            goals(&apos;test&apos;)
+        }
+        shell(&apos;&apos;&apos;
+            echo ************RUNNING THE JAR************************
+            java -jar /var/jenkins_home/workspace/maven_dsl/target/my-app-1.0-SNAPSHOT.jar                                                                                                                                                     T.jar
+        &apos;&apos;&apos;)
     }
 
     publishers {
-        mailer(&apos;orir@dts-4u.com&apos;, true, true)
+        archiveArtifacts(&apos;target/*.jar&apos;)
+        archiveJunit(&apos;target/surefire-reports/*.xml&apos;)
+        mailer(&apos;ori.r@ls-techs.com&apos;, true, true)
     }
 }</scriptText>
       <usingScriptText>true</usingScriptText>

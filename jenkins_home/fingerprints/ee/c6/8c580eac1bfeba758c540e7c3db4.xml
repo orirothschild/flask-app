@@ -5,8 +5,12 @@
   <fileName>Credential id=git_user name=rothschild/******</fileName>
   <usages>
     <entry>
+      <string>maven_dsl</string>
+      <ranges>3-7,10-12</ranges>
+    </entry>
+    <entry>
       <string>maven-job</string>
-      <ranges>29-37</ranges>
+      <ranges>29-38</ranges>
     </entry>
   </usages>
   <facets/>

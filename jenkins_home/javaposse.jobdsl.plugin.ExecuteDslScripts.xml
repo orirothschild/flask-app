@@ -9,10 +9,24 @@
   </templateJobMap>
   <generatedJobMap class="concurrent-hash-map">
     <entry>
+      <string>maven_dsl</string>
+      <javaposse.jobdsl.plugin.SeedReference>
+        <seedJobName>seed-job</seedJobName>
+        <digest>a31653944f959854ed8128e4683ab000</digest>
+      </javaposse.jobdsl.plugin.SeedReference>
+    </entry>
+    <entry>
       <string>job_dsl_example</string>
       <javaposse.jobdsl.plugin.SeedReference>
         <seedJobName>seed-job</seedJobName>
         <digest>bcc9ca677031091339efae102e5972b7</digest>
+      </javaposse.jobdsl.plugin.SeedReference>
+    </entry>
+    <entry>
+      <string>job_ansilbe_dsl</string>
+      <javaposse.jobdsl.plugin.SeedReference>
+        <seedJobName>seed-job</seedJobName>
+        <digest>00d21d65a432c91fc7942bf12d79ce36</digest>
       </javaposse.jobdsl.plugin.SeedReference>
     </entry>
   </generatedJobMap>
