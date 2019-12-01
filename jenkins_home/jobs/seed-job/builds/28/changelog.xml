@@ -1,0 +1,44 @@
+commit 222100a2a57f6032b518bd745eceed7a62cd3059
+tree d2c5e9d3e8faa42b37d61da0274d0db64c7dadd1
+parent 10cadcf732ccc5a01b5c805e054e6f68da6dadea
+author ori <ori@user-pc.dts.local> 2019-11-20 11:16:44 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-20 11:16:44 -0500
+
+     another shot
+
+
+
+:100644 100644 983d897e21b494127701c2b090072cfe94e79d01 d4cc07a102f32544381e793f6cfc21c2f8589a1d M	jobs
+commit 10cadcf732ccc5a01b5c805e054e6f68da6dadea
+tree 2396baae126b31b646efd4423607443120aebbd7
+parent cce3e4fde97188d27d4f8925c47f143a81c2a26f
+author ori <ori@user-pc.dts.local> 2019-11-20 11:13:38 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-20 11:13:38 -0500
+
+    dsl-job-trigger
+
+
+
+:100644 100644 17b202c75c2a91b5c46df28e98799857940d70f3 983d897e21b494127701c2b090072cfe94e79d01 M	jobs
+commit cce3e4fde97188d27d4f8925c47f143a81c2a26f
+tree fe40431e3c549a78e9cc7817f2f2558bd1140606
+parent 57ff677727acc3bca7e80cd092ccc2e2431d6db9
+author ori <ori@user-pc.dts.local> 2019-11-20 11:09:18 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-20 11:09:18 -0500
+
+    dsl-teigger
+
+
+
+:100644 100644 17b202c75c2a91b5c46df28e98799857940d70f3 17b202c75c2a91b5c46df28e98799857940d70f3 R100	dsl-script	jobs
+commit 57ff677727acc3bca7e80cd092ccc2e2431d6db9
+tree 38ce0ca05affbdcf114cab296ccf060d16ce7324
+parent 581debbdf38af7cf2e82c5bdd5aa9d49fc20c94d
+author ori <ori@user-pc.dts.local> 2019-11-20 11:07:37 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-20 11:07:37 -0500
+
+    dsl-trigger
+
+
+
+:100644 100644 72e6b302a09084c801ae435f4dd577f487650753 17b202c75c2a91b5c46df28e98799857940d70f3 M	dsl-script

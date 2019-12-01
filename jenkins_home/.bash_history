@@ -1,43 +1,3 @@
-docker images
-exit
-ls
-ssh remote_user@remote_host
-exit
-ls
-ssh remote-user@remote-host
-ping remote-host
-ls
-ls
-exit
-ls
-cd tmp/
-ls
-cd ..
-ssh -i remote-key remote-user@remote-host
-docker ps
-exit
-ssh remote_user@remote_host
-ls
-ssh remote_user@remote_host
-ls
-cd var/jenkins_home/.ssh/known_hosts 
-ls
-cd var/jenkins_home/.ssh
-ls
-cd known_hosts 
-cat known_hosts 
-rm known_hosts 
-ls
-cd ..
-exit
-ssh remote_user@remote_host
-exit
-ssh -i remote-key remote_user@remote_host
-ssh -i remote-key remote_user@remote_host
-ls
-cd tmp/
-ls
-cd ..
 ssh -i remote-key remote_user@remote_host
 cd tmp/
 ssh -i remote-key remote_user@remote_host
@@ -497,4 +457,44 @@ cat people.yml
 cat table.j2 
 cat people.yml 
 cat hosts 
+exit
+ls
+ssh remote_user@remote-host
+ls
+docker ps
+exit
+ls
+ssh git
+ssh git
+ssh git
+ssh remote_host@remote-user
+ssh remote-host@remote_user
+exit
+ssh remote-host@remote-user
+ssh remote-host@remote_user
+ssh remote-user@remote_host
+ssh remote_user@remote-host
+ls
+cd usr/
+ls
+cd ..
+cd var/
+ls
+cd jenkins_home/
+ls
+cd ansible/
+ls
+cat pa
+cat play.yml 
+cat hosts 
+ssh web@remote_user 
+ssh web remote-host@remote_user 
+ssh web
+exit
+exit
+exot
+exit
+docker ps
+exit
+docker ps
 exit

@@ -1,80 +1,72 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
-  <actions/>
-  <description>Maven dsl project</description>
-  <keepDependencies>false</keepDependencies>
-  <properties>
-    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
-      <gitLabConnection></gitLabConnection>
-    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
-  </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.12.1">
-    <configVersion>2</configVersion>
-    <userRemoteConfigs>
-      <hudson.plugins.git.UserRemoteConfig>
-        <url>http://git:80/jenkins/maven-project.git</url>
-        <credentialsId>git_user</credentialsId>
-      </hudson.plugins.git.UserRemoteConfig>
-    </userRemoteConfigs>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>master</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
-    <extensions/>
-  </scm>
-  <canRoam>true</canRoam>
-  <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
-  <concurrentBuild>false</concurrentBuild>
-  <builders>
-    <hudson.tasks.Maven>
-      <targets>-B -DskipTests clean package</targets>
-      <mavenName>jenkins-maven</mavenName>
-      <usePrivateRepository>false</usePrivateRepository>
-      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
-      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
-      <injectBuildVariables>true</injectBuildVariables>
-    </hudson.tasks.Maven>
-    <hudson.tasks.Maven>
-      <targets>test</targets>
-      <mavenName>jenkins-maven</mavenName>
-      <usePrivateRepository>false</usePrivateRepository>
-      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
-      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
-      <injectBuildVariables>true</injectBuildVariables>
-    </hudson.tasks.Maven>
-    <hudson.tasks.Shell>
-      <command>
+<?xml version="1.0" encoding="UTF-8"?><project>
+    <actions/>
+    <description>Maven dsl project</description>
+    <keepDependencies>false</keepDependencies>
+    <properties/>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers/>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+        <hudson.tasks.Maven>
+            <targets>-B -DskipTests clean package</targets>
+            <mavenName>jenkins-maven</mavenName>
+            <jvmOptions/>
+            <usePrivateRepository>false</usePrivateRepository>
+            <injectBuildVariables>true</injectBuildVariables>
+        </hudson.tasks.Maven>
+        <hudson.tasks.Maven>
+            <targets>test</targets>
+            <mavenName>jenkins-maven</mavenName>
+            <jvmOptions/>
+            <usePrivateRepository>false</usePrivateRepository>
+            <injectBuildVariables>true</injectBuildVariables>
+        </hudson.tasks.Maven>
+        <hudson.tasks.Shell>
+            <command>
             echo ************RUNNING THE JAR************************
             java -jar /var/jenkins_home/workspace/maven_dsl/target/my-app-1.0-SNAPSHOT.jar                                                                                                                                                     T.jar
         </command>
-    </hudson.tasks.Shell>
-  </builders>
-  <publishers>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>target/*.jar</artifacts>
-      <allowEmptyArchive>false</allowEmptyArchive>
-      <onlyIfSuccessful>false</onlyIfSuccessful>
-      <fingerprint>false</fingerprint>
-      <defaultExcludes>true</defaultExcludes>
-      <caseSensitive>true</caseSensitive>
-    </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.junit.JUnitResultArchiver plugin="junit@1.28">
-      <testResults>target/surefire-reports/*.xml</testResults>
-      <keepLongStdio>false</keepLongStdio>
-      <healthScaleFactor>1.0</healthScaleFactor>
-      <allowEmptyResults>false</allowEmptyResults>
-    </hudson.tasks.junit.JUnitResultArchiver>
-    <hudson.tasks.Mailer plugin="mailer@1.29">
-      <recipients>ori.r@ls-techs.com</recipients>
-      <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>true</sendToIndividuals>
-    </hudson.tasks.Mailer>
-  </publishers>
-  <buildWrappers/>
+        </hudson.tasks.Shell>
+    </builders>
+    <publishers>
+        <hudson.tasks.ArtifactArchiver>
+            <artifacts>target/*.jar</artifacts>
+            <allowEmptyArchive>false</allowEmptyArchive>
+            <defaultExcludes>true</defaultExcludes>
+            <fingerprint>false</fingerprint>
+            <onlyIfSuccessful>false</onlyIfSuccessful>
+        </hudson.tasks.ArtifactArchiver>
+        <hudson.tasks.junit.JUnitResultArchiver>
+            <testResults>target/surefire-reports/*.xml</testResults>
+            <keepLongStdio>false</keepLongStdio>
+            <testDataPublishers/>
+            <allowEmptyResults>false</allowEmptyResults>
+            <healthScaleFactor>1.0</healthScaleFactor>
+        </hudson.tasks.junit.JUnitResultArchiver>
+        <hudson.tasks.Mailer>
+            <recipients>ori.r@ls-techs.com</recipients>
+            <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
+            <sendToIndividuals>true</sendToIndividuals>
+        </hudson.tasks.Mailer>
+    </publishers>
+    <buildWrappers/>
+    <scm class="hudson.plugins.git.GitSCM">
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>http://git:80/jenkins/maven-project.git</url>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>master</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <configVersion>2</configVersion>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <gitTool>Default</gitTool>
+        <extensions/>
+    </scm>
 </project>

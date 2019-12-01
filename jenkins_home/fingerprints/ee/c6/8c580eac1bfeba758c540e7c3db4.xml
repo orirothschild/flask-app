@@ -10,7 +10,11 @@
     </entry>
     <entry>
       <string>maven-job</string>
-      <ranges>29-38</ranges>
+      <ranges>29-46</ranges>
+    </entry>
+    <entry>
+      <string>seed-job</string>
+      <ranges>27-30</ranges>
     </entry>
   </usages>
   <facets/>

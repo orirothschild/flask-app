@@ -1,0 +1,24 @@
+Started by user [8mha:////4C5RC6GcucULwz4N/QzWgrClNOpRiryNZc2cjL8mZwQEAAAAlR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZO/dLi1CL9/KJMAFtjI72+AAAA[0mori rothschild
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/seed-job
+using credential git_user
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url http://git:80/jenkins/dsl-jobs # timeout=10
+Fetching upstream changes from http://git:80/jenkins/dsl-jobs
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- http://git:80/jenkins/dsl-jobs +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 222100a2a57f6032b518bd745eceed7a62cd3059 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 222100a2a57f6032b518bd745eceed7a62cd3059
+Commit message: " another shot"
+ > git rev-list --no-walk 581debbdf38af7cf2e82c5bdd5aa9d49fc20c94d # timeout=10
+Processing DSL script jobs
+ERROR: startup failed:
+jobs: 92: expecting '}', found '' @ line 92, column 1.
+1 error
+
+Finished: FAILURE

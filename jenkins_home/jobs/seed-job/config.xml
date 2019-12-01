@@ -8,7 +8,23 @@
       <gitLabConnection></gitLabConnection>
     </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
   </properties>
-  <scm class="hudson.scm.NullSCM"/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.12.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>http://git:80/jenkins/dsl-jobs</url>
+        <credentialsId>git_user</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -17,66 +33,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.76">
-      <scriptText>job(&apos;job_ansilbe_dsl&apos;) {
-
-    description(&apos;This is my ansible Job&apos;)
-
-
-    parameters {
-        choiceParam(&apos;AGE&apos;, [&apos;20&apos;, &apos;21&apos;,&apos;22&apos;,&apos;23&apos;,&apos;24&apos;,&apos;25&apos;])
-    }
-
-    triggers {
-        cron(&apos;H 5 * * 7&apos;)
-    }
-
-    steps {
-
-        wrappers {
-            colorizeOutput(colorMap = &apos;xterm&apos;)
-      }
-        ansiblePlaybook(&apos;/var/jenkins_home/ansible/people.yml&apos;) {
-            inventoryPath(&apos;/var/jenkins_home/ansible/hosts&apos;)
-            colorizedOutput(true)
-            extraVars {
-                extraVar(&quot;PEOPLE_AGE&quot;, &apos;${AGE}&apos;, false)
-            }
-        }
-    }
-}
-
-
-job(&apos;maven_dsl&apos;) {
-
-    description(&apos;Maven dsl project&apos;)
-
-    scm {
-        git(&apos;http://git:80/jenkins/maven-project.git&apos;, &apos;master&apos;, {   
-          node -&gt; node / &apos;extensions&apos; &lt;&lt; &apos;&apos; })
-    }
-
-    steps {
-        maven {
-            mavenInstallation(&apos;jenkins-maven&apos;)
-            goals(&apos;-B -DskipTests clean package&apos;)
-        }
-        maven {
-            mavenInstallation(&apos;jenkins-maven&apos;)
-            goals(&apos;test&apos;)
-        }
-        shell(&apos;&apos;&apos;
-            echo ************RUNNING THE JAR************************
-            java -jar /var/jenkins_home/workspace/maven_dsl/target/my-app-1.0-SNAPSHOT.jar                                                                                                                                                     T.jar
-        &apos;&apos;&apos;)
-    }
-
-    publishers {
-        archiveArtifacts(&apos;target/*.jar&apos;)
-        archiveJunit(&apos;target/surefire-reports/*.xml&apos;)
-        mailer(&apos;ori.r@ls-techs.com&apos;, true, true)
-    }
-}</scriptText>
-      <usingScriptText>true</usingScriptText>
+      <targets>jobs</targets>
+      <usingScriptText>false</usingScriptText>
       <sandbox>false</sandbox>
       <ignoreExisting>false</ignoreExisting>
       <ignoreMissingFiles>false</ignoreMissingFiles>
