@@ -1,9 +1,3 @@
-ssh -i remote-key remote_user@remote_host
-cd tmp/
-ssh -i remote-key remote_user@remote_host
-cat remote-key 
-MIIEowIBAAKCAQEA1D0cdv93zYq7kV9knjTbxmSYMWjkyF1mJeMgSx0+BbT038d+
-wgbhda5a8OYsaS3U/0FWD4NgCF8WKjinf9Hoy0hPwC9WwXCkD0+0o0zrvdIEZvpc
 fpSSwjusmHvYI525pnQpOsijUZI6ejxmEMXyZJmvLHJm6uFpExnPl36OcwYcGSvx
 mT7MP2stOwAa1MxDkFUR2/tZbQa5Lvo8rYDYi4Fe1UwTH+ynDvLoQstFyprtnAOm
 n6EA32HPr8gJBZyRzW9eD0RvkjrNPaJQTtRollO/kNjOTAJ9Bri6c4bqJMjhIPdT
@@ -497,4 +491,10 @@ exit
 docker ps
 exit
 docker ps
+exit
+ls
+cd
+cd ansible/
+ls
+cat hosts 
 exit
