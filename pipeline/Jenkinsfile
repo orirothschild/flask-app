@@ -1,0 +1,14 @@
+ pipeline {
+     agent any
+	
+     stages {
+	 stage('Build'){
+	     steps {
+                 sh '''
+		     echo build
+                     ./jenkins/build/mvn.sh mvn -B -DskipTests clean package
+                     ./jenkins/build/build.sh
+                     '''
+             }
+         }
+     }
