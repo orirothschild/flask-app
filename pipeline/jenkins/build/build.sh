@@ -1,6 +1,5 @@
 #!/bin/bash
 # Copy the new jar to specified location
-export BUILD_TAG=5
 
 cp -f java-app/target/*.jar jenkins/build/
 echo "***********************"
