@@ -1,0 +1,9 @@
+version: '3'
+services:
+  visual:
+    container_name: visual
+    image: exadra37/visual-studio-code
+    ports:
+      - "8100:8080"
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home
