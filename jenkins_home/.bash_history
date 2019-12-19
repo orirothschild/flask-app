@@ -1,10 +1,3 @@
-fpSSwjusmHvYI525pnQpOsijUZI6ejxmEMXyZJmvLHJm6uFpExnPl36OcwYcGSvx
-mT7MP2stOwAa1MxDkFUR2/tZbQa5Lvo8rYDYi4Fe1UwTH+ynDvLoQstFyprtnAOm
-n6EA32HPr8gJBZyRzW9eD0RvkjrNPaJQTtRollO/kNjOTAJ9Bri6c4bqJMjhIPdT
-UGPne/GCL5ZKG8DaHqMBbrxzxCbouYsKyHmUVwIDAQABAoIBAA6sZvJnOS4xwEQN
-t1QkzWkK/Wa1HNQpeO13pXzr+aTFXQS3szDQ7veG5WywTTO8YnR/XObXq2UIxeyH
-XDU/Gvwq9LCR1UqscftJBHEh2U6XXYyNFKX/uaHKJGWqckgMGJDEiTEyO/BgzsAy
-us/AD8EayvyksC7fBLe4WhzcOBcFndncBmELgZhW62J213cNqsyfMMjOtqMKkOzG
 ZSqqrqLTalaN9GWoM1NlNrjrMmoAACoWWyeYird/bURkNL9wxabiXmybHWFlUp/g
 8yPU4OwIwqwRTn3AgtF0b8bH5wiauvmsvJ6JB+pA/bNzBGAH8hdABk52SUHwa0EA
 xBFV4mkCgYEA9ATl3VTYTgiVgyW1Q+dC8rjUVNvo6xJm372GlcuTsmrvd21bSozw
@@ -497,4 +490,11 @@ cd
 cd ansible/
 ls
 cat hosts 
+exit
+sudo groupadd docker
+xit
+exit
+ls
+ls
+exit
 exit

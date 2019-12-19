@@ -9,6 +9,10 @@
       <ranges>3-7,10-12</ranges>
     </entry>
     <entry>
+      <string>pipeline-docker-maven</string>
+      <ranges>2-9</ranges>
+    </entry>
+    <entry>
       <string>maven-job</string>
       <ranges>29-46</ranges>
     </entry>
@@ -17,5 +21,11 @@
       <ranges>27-30</ranges>
     </entry>
   </usages>
-  <facets/>
+  <facets>
+    <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@2.3.0">
+      <timestamp>1576767696717</timestamp>
+      <itemFullName>pipeline-docker-maven</itemFullName>
+      <timestamp0>1576767638849</timestamp0>
+    </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
+  </facets>
 </fingerprint>
