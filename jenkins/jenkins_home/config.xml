@@ -135,7 +135,9 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>1</int>
+          <int>2</int>
+          <string>_JAVA_OPTIONS</string>
+          <string>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</string>
           <string>OWNER</string>
           <string>Ori Rothschild</string>
         </tree-map>
