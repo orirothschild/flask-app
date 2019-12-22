@@ -1,0 +1,4 @@
+- hosts: test1
+  tasks:
+
+   -  shell: jmeter.sh >> somelog.txt

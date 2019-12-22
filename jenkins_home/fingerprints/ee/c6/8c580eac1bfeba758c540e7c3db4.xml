@@ -1,0 +1,31 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2019-11-10 15:53:41.5 UTC</timestamp>
+  <md5sum>eec68c580eac1bfeba758c540e7c3db4</md5sum>
+  <fileName>Credential id=git_user name=rothschild/******</fileName>
+  <usages>
+    <entry>
+      <string>maven_dsl</string>
+      <ranges>3-7,10-12</ranges>
+    </entry>
+    <entry>
+      <string>pipeline-docker-maven</string>
+      <ranges>2-9</ranges>
+    </entry>
+    <entry>
+      <string>maven-job</string>
+      <ranges>29-46</ranges>
+    </entry>
+    <entry>
+      <string>seed-job</string>
+      <ranges>27-30</ranges>
+    </entry>
+  </usages>
+  <facets>
+    <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@2.3.0">
+      <timestamp>1576767696717</timestamp>
+      <itemFullName>pipeline-docker-maven</itemFullName>
+      <timestamp0>1576767638849</timestamp0>
+    </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
+  </facets>
+</fingerprint>

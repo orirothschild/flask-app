@@ -1,0 +1,197 @@
+commit 39c34311233bb39103248414300ddaaf31286433
+tree 7a1fd47914f23dde4371cd82509bb5e8768480bf
+parent 008c08710a19d9509eeea66b3ea10ce1aa42c735
+author ori <ori@user-pc.dts.local> 2019-11-10 10:49:43 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-10 10:49:43 -0500
+
+    hello
+
+
+
+:000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	txt
+commit 008c08710a19d9509eeea66b3ea10ce1aa42c735
+tree d16ef97ce585f4414e462fd6896849d075608344
+parent 0d85b7e1fd39bc6978511f92381aa10534ca4c1b
+author ori <ori@user-pc.dts.local> 2019-11-10 10:43:07 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-10 10:43:07 -0500
+
+    hello
+
+
+
+:100644 100755 eba1110b5794582b53554bb1e4224b860d4e173f eba1110b5794582b53554bb1e4224b860d4e173f M	.gitattributes
+:100644 100755 d3b1c34c78460734b01520ffeda1461f1958a6c2 d3b1c34c78460734b01520ffeda1461f1958a6c2 M	.gitignore
+:100644 100755 40efacc879fb31a44b5f9bbc5b2fabb3c427b614 40efacc879fb31a44b5f9bbc5b2fabb3c427b614 M	README.md
+:100644 100755 a70013f609863381f568abeeccd16bd2a443dd3b a70013f609863381f568abeeccd16bd2a443dd3b M	jenkins/Jenkinsfile
+:100644 100755 19ee4305a859d0ed77496ccabf20040ec9214bb3 19ee4305a859d0ed77496ccabf20040ec9214bb3 M	pom.xml
+:100644 100755 5a6d57214d17ba7484046928cf2e933ec550b50a 5a6d57214d17ba7484046928cf2e933ec550b50a M	src/main/java/com/mycompany/app/App.java
+:100644 100755 908bac851aef9be99dcc57a0efb36dc514d4e5ca 908bac851aef9be99dcc57a0efb36dc514d4e5ca M	src/test/java/com/mycompany/app/AppTest.java
+commit 0d85b7e1fd39bc6978511f92381aa10534ca4c1b
+tree 1b7970b092e741f95a24a8db3a5c042534c39913
+parent 793c42e8fe00936cec3de83ca675d4821c169594
+author Giles Gaskell <gilesgas@gmail.com> 2017-12-18 20:53:10 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-12-18 20:53:10 +1100
+
+    Amend README.md
+
+
+
+:100644 100644 c6512554faee99538147192dbd0026a25f1fc19f 40efacc879fb31a44b5f9bbc5b2fabb3c427b614 M	README.md
+commit 793c42e8fe00936cec3de83ca675d4821c169594
+tree 09dd9762bead4bbeebf5c5a975014d30ef0b5d46
+parent b132e29016b0b4f2bce09e18edfe1c238763225d
+author Giles Gaskell <gilesgas@gmail.com> 2017-12-18 18:54:20 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-12-18 18:54:20 +1100
+
+    Refactor App and made AppTest properly test App.
+
+    * Update version of junit dependency in 'pom.xml' file (to 4.11) so that 
+    org.junit dependencies in AppTest could be imported.
+
+
+:100644 100644 46ef87c0f6496aa3d49114ca89933ea04c3a0483 19ee4305a859d0ed77496ccabf20040ec9214bb3 M	pom.xml
+:100644 100644 77cf3e055bb4065b7b534c220d28df34b5ebe71c 5a6d57214d17ba7484046928cf2e933ec550b50a M	src/main/java/com/mycompany/app/App.java
+:100644 100644 3355990039875d2dd8f0dbf7bed635d95ace0ffa 908bac851aef9be99dcc57a0efb36dc514d4e5ca M	src/test/java/com/mycompany/app/AppTest.java
+commit b132e29016b0b4f2bce09e18edfe1c238763225d
+tree 83df7ed4fa23ff88a38aec6a9cf9532e8222a982
+parent 6408509e2e1bebfdef4b4e3fadbd112d379ecb08
+author Giles Gaskell <gilesgas@gmail.com> 2017-12-15 09:08:23 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-12-15 09:08:23 +1100
+
+    Update README.md with amended tutorial name and URL
+
+
+
+:100644 100644 42c9f86126d71408800b860703ffc4f791eaba35 c6512554faee99538147192dbd0026a25f1fc19f M	README.md
+commit 6408509e2e1bebfdef4b4e3fadbd112d379ecb08
+tree 3c0747d6fc87c9df764046b3a6fc0e97847fdd36
+parent e60c68c3a473d2c73cfb77872bf9c19b8aefb1ba
+author Giles Gaskell <gilesgas@gmail.com> 2017-11-01 10:07:52 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-11-01 10:07:52 +1100
+
+    Update README.md
+
+    * Minor clarification.
+
+
+:100644 100644 14638ba37297eea23aad61df07f7ccf651bd46f6 42c9f86126d71408800b860703ffc4f791eaba35 M	README.md
+commit e60c68c3a473d2c73cfb77872bf9c19b8aefb1ba
+tree 3a10b942224b7e814faabceea6d215eb201e1f2d
+parent a24ff5363547bca1bd6d0876653fea671a4a66d5
+author Giles Gaskell <gilesgas@gmail.com> 2017-11-01 09:44:36 +1100
+committer GitHub <noreply@github.com> 2017-11-01 09:44:36 +1100
+
+    Update README.md
+
+    * Update name (and link) of tutorial in the Jenkins User Documentation.
+
+:100644 100644 2fdaa3b8bc3c44a4896b15241bde1772b4ad6703 14638ba37297eea23aad61df07f7ccf651bd46f6 M	README.md
+commit a24ff5363547bca1bd6d0876653fea671a4a66d5
+tree 1f03009d17c7fc19f104d93516aa21f4d0034193
+parent 2dc5ed5721d282f86d15a7a2af49afa6c29ac96c
+author Giles Gaskell <gilesgas@gmail.com> 2017-10-28 12:08:28 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-10-28 12:08:28 +1100
+
+    Add 'post' section with 'junit' steps.
+
+    * Based on https://github.com/jenkins-infra/jenkins.io/pull/1198
+
+
+:100644 100644 713a3c1607a26ac13bd7a703247c9e331902b228 a70013f609863381f568abeeccd16bd2a443dd3b M	jenkins/Jenkinsfile
+commit 2dc5ed5721d282f86d15a7a2af49afa6c29ac96c
+tree af5a0178fb0172a79524b96eb87f8aa25a4f06f6
+parent 77f2f02f22792beb871e4ada04e90ce9eba89e2d
+author Giles Gaskell <gilesgas@gmail.com> 2017-10-05 11:44:00 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-10-05 11:44:00 +1100
+
+    Add Jenkinsfile example + wrap wording in README.md
+
+
+
+:100644 100644 bae8a06408ec4a09c87fb19a430b739bb5741727 2fdaa3b8bc3c44a4896b15241bde1772b4ad6703 M	README.md
+:000000 100644 0000000000000000000000000000000000000000 713a3c1607a26ac13bd7a703247c9e331902b228 A	jenkins/Jenkinsfile
+commit 77f2f02f22792beb871e4ada04e90ce9eba89e2d
+tree 025be6163c1bf9db40a9ef0fd9e1b34e0a5ddd1d
+parent ef91e25a3823cca1f13f5c99eda7bdfbc415f3b4
+author Giles Gaskell <gilesgas@gmail.com> 2017-10-05 11:38:42 +1100
+committer Giles Gaskell <gilesgas@gmail.com> 2017-10-05 11:38:42 +1100
+
+    Add README.md content
+
+
+
+:100644 100644 e2d5190587fceac08d01013ef86fb3e549f2a563 bae8a06408ec4a09c87fb19a430b739bb5741727 M	README.md
+commit ef91e25a3823cca1f13f5c99eda7bdfbc415f3b4
+tree 3011cdc7749ac56910a25817b2332a6225e2c574
+parent 15d1635fbc6f50ddd91cd5958672a1ef9956a1e7
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-30 23:28:58 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-30 23:28:58 +1000
+
+    Make deliver.sh executable.
+
+
+
+:100644 100755 25b27dc7955142806c696f1efbda4bfbca58924f 25b27dc7955142806c696f1efbda4bfbca58924f M	jenkins/scripts/deliver.sh
+commit 15d1635fbc6f50ddd91cd5958672a1ef9956a1e7
+tree 6a5607ebd25695b803286aa1c688ccc2442b91c0
+parent 8d2a8bad05b4287b297c12f0f961dfbc5e7dc6ec
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-30 23:25:56 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-30 23:25:56 +1000
+
+    Add 'deliver.sh' within /jenkins/scripts directory.
+
+    * This file contains the 'Deliver' stage shell script that will be run 
+    during this stage of the Pipeline.
+
+
+:000000 100644 0000000000000000000000000000000000000000 25b27dc7955142806c696f1efbda4bfbca58924f A	jenkins/scripts/deliver.sh
+commit 8d2a8bad05b4287b297c12f0f961dfbc5e7dc6ec
+tree 7bd2d0ff4fbb7ebfce7d33383d4ca950397d70a9
+parent 8c1d8e347aebbeab4e759b88d3019640beb17d6d
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-26 15:03:17 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-26 15:03:17 +1000
+
+    Add build/plugins section to pom.xml to make resulting jar file
+    executable.
+
+
+
+:100644 100644 88b3fe2807b64f0c6fc7401035c5fc3d69f1882d 46ef87c0f6496aa3d49114ca89933ea04c3a0483 M	pom.xml
+commit 8c1d8e347aebbeab4e759b88d3019640beb17d6d
+tree 6c8b56b4731c258d0667923cf7ac067b07e145bc
+parent 78065f19a200e05dfbc8f555d00012d79d35186a
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-26 15:00:46 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-26 15:00:46 +1000
+
+    Add .DS_Store to .gitignore
+
+
+
+:100644 100644 5f2dbe11df91c879164ae1150f5577ac7263c1da d3b1c34c78460734b01520ffeda1461f1958a6c2 M	.gitignore
+commit 78065f19a200e05dfbc8f555d00012d79d35186a
+tree e41a688522df3403e172d09c6fa972fa2ec1f16b
+parent d84fc5a893d762217545c46403748dacb1fec0bc
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-26 12:22:44 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-26 12:22:44 +1000
+
+    Add simple Maven archetype project.
+
+    From https://maven.apache.org/guides/getting-started/index.html
+
+
+:000000 100644 0000000000000000000000000000000000000000 88b3fe2807b64f0c6fc7401035c5fc3d69f1882d A	pom.xml
+:000000 100644 0000000000000000000000000000000000000000 77cf3e055bb4065b7b534c220d28df34b5ebe71c A	src/main/java/com/mycompany/app/App.java
+:000000 100644 0000000000000000000000000000000000000000 3355990039875d2dd8f0dbf7bed635d95ace0ffa A	src/test/java/com/mycompany/app/AppTest.java
+commit d84fc5a893d762217545c46403748dacb1fec0bc
+tree 72a6030b62a6b586be37f52d3a8709d6233a88a1
+parent 
+author Giles Gaskell <gilesgas@gmail.com> 2017-09-26 12:13:49 +1000
+committer Giles Gaskell <gilesgas@gmail.com> 2017-09-26 12:13:49 +1000
+
+    Initial commit
+
+
+
+:000000 100644 0000000000000000000000000000000000000000 eba1110b5794582b53554bb1e4224b860d4e173f A	.gitattributes
+:000000 100644 0000000000000000000000000000000000000000 5f2dbe11df91c879164ae1150f5577ac7263c1da A	.gitignore
+:000000 100644 0000000000000000000000000000000000000000 e2d5190587fceac08d01013ef86fb3e549f2a563 A	README.md

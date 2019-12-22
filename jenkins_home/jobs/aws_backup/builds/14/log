@@ -1,0 +1,25 @@
+Started by user [8mha:////4C5RC6GcucULwz4N/QzWgrClNOpRiryNZc2cjL8mZwQEAAAAlR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZO/dLi1CL9/KJMAFtjI72+AAAA[0mori rothschild
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/aws_backup
+[SSH] script:
+MYSQL_HOST="db_host"
+AWS_SECRET_KEY=**********
+MYSQL_PASSWORD=**********
+DATABASE_NAME="testdb"
+AWS_BUCKET_NAME="jenkins-mysql-backup-ls"
+
+/tmp/script.sh $MYSQL_HOST  $MYSQL_PASSWORD  $DATABASE_NAME  $AWS_SECRET_KEY  $AWS_BUCKET_NAME
+
+[SSH] executing...
+Uploading db-15-34-20.sql db
+Completed 1.2 KiB/1.2 KiB (1.2 KiB/s) with 1 file(s) remainingupload: ../../tmp/db-15-34-20.sql to s3://jenkins-mysql-backup-ls/db-15-34-20.sql
+
+[SSH] completed
+[SSH] exit-status: 0
+
+[aws_backup] $ /bin/sh -xe /tmp/jenkins7336990909832763188.sh
++ echo1
+/tmp/jenkins7336990909832763188.sh: 2: /tmp/jenkins7336990909832763188.sh: echo1: not found
+Build step 'Execute shell' marked build as failure
+Sending e-mails to: ori.r@ls-techs.com
+Finished: FAILURE

@@ -1,0 +1,61 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection></gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+#!/bin/bash -e
+##Coguration
+
+JENKINS=&quot;http://192.168.200.65:8080&quot;
+
+JENKINS_USER=&quot;orirothschild&quot;
+JENKINS_USER_TOKEN=&quot;1193b8617462894da4de8cc1a3a96d3657&quot;
+
+# nested path to job
+JOB=&quot;unit-tests&quot;
+cardNumber=&quot;4580458045804580&quot;
+cardCvv=&quot;123&quot;
+cardId=&quot;311321590&quot;
+creditCardExpirey=&quot;0421&quot;
+## Script
+
+JENKINS_AUTH=&quot;$JENKINS_USER:$JENKINS_USER_TOKEN&quot;
+
+CRUMB=$(curl --user &quot;$JENKINS_AUTH&quot; &quot;$JENKINS&quot;&apos;/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,&quot;:&quot;,//crumb)&apos;)
+
+CONTAINS_ERROR=$(echo &quot;$CRUMB&quot; | grep &quot;&lt;html&gt;&quot; || true)
+
+if [ -n &quot;$CONTAINS_ERROR&quot; ]; then
+  echo &quot;$CRUMB&quot;
+  exit 1
+fi
+
+curl -X POST \
+  &quot;$JENKINS&quot;/job/&quot;$JOB&quot;/buildWithParameters?delay=0sec \
+  --user &quot;$JENKINS_AUTH&quot; \
+-H &quot;$CRUMB&quot;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
+</project>

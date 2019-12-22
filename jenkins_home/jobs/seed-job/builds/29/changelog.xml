@@ -1,0 +1,11 @@
+commit 79e52d01c9918aa684e8bf021eaa4accc16bfd00
+tree bb837ff8bd8a0079b641b1d9821437f242bfe55d
+parent 222100a2a57f6032b518bd745eceed7a62cd3059
+author ori <ori@user-pc.dts.local> 2019-11-20 11:31:10 -0500
+committer ori <ori@user-pc.dts.local> 2019-11-20 11:31:10 -0500
+
+    is the trigger working
+
+
+
+:100644 100644 d4cc07a102f32544381e793f6cfc21c2f8589a1d e53868d75e1dac1fb37841f321439f28e9c6db0e M	jobs

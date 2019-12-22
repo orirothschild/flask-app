@@ -1,0 +1,28 @@
+Started by user [8mha:////4C5RC6GcucULwz4N/QzWgrClNOpRiryNZc2cjL8mZwQEAAAAlR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZO/dLi1CL9/KJMAFtjI72+AAAA[0mori rothschild
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/start-jmeter
+[start-jmeter] $ /bin/sh -xe /tmp/jenkins4281166402785311405.sh
++ JENKINS=http://192.168.200.65:8080
++ JENKINS_USER=orirothschild
++ JENKINS_USER_TOKEN=1193b8617462894da4de8cc1a3a96d3657
++ JOB=unit-tests
++ cardNumber=4580458045804580
++ cardCvv=123
++ cardId=311321590
++ creditCardExpirey=0421
++ JENKINS_AUTH=orirothschild:1193b8617462894da4de8cc1a3a96d3657
++ curl --user orirothschild:1193b8617462894da4de8cc1a3a96d3657 http://192.168.200.65:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    46  100    46    0     0   3371      0 --:--:-- --:--:-- --:--:--  3538
++ CRUMB=Jenkins-Crumb:d3b08af3e39950f272e11ddab5cf146d
++ echo Jenkins-Crumb:d3b08af3e39950f272e11ddab5cf146d
++ grep <html>
++ true
++ CONTAINS_ERROR=
++ [ -n  ]
++ curl -X POST http://192.168.200.65:8080/job/unit-tests/buildWithParameters?delay=0sec --user orirothschild:1193b8617462894da4de8cc1a3a96d3657 -H Jenkins-Crumb:d3b08af3e39950f272e11ddab5cf146d
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+Finished: SUCCESS
