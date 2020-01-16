@@ -16,6 +16,15 @@
               <hash>a0f9898ca84b9be1bfc1aa9ec787e98adff221bf646777df9a1b204605bbe4d5</hash>
             </value>
           </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+            <uuid>f450a9df-57e0-43da-8fe4-cb0562dd696f</uuid>
+            <name>Token created on 2019-12-29T14:19:04.751Z</name>
+            <creationDate>2019-12-29 14:19:04.758 UTC</creationDate>
+            <value>
+              <version>11</version>
+              <hash>caff68c6ef7f42606e58db3eef2940e810b5e20afd0b5675afa9806a37f11308</hash>
+            </value>
+          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
         </tokenList>
       </tokenStore>
     </jenkins.security.ApiTokenProperty>
@@ -60,5 +69,6 @@
       </roles>
       <timestamp>1567598166023</timestamp>
     </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.model.TimeZoneProperty/>
   </properties>
 </user>

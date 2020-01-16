@@ -1,108 +1,3 @@
-ls
-cd ansible/
-ll
-l
-ls
-pwd
-exit
-cd 
-cd ansible/
-ls
-cat hosts 
-ansible -i hosts 
-ansible -i hosts -m ping
-ansible -i hosts -m ping
-exit
-ls
-exit
-ansible -i hosts -m ping
-ansible -i hosts -m ping
-ls
-cd
-ls
-cd ansible/
-cat hosts 
-cat hosts 
-cat hosts 
-cat hosts 
-vi hosts 
-exit
-ansible -i hosts -m ping
-cd 
-ansible -i hosts -m ping
-cat ansible/hosts 
-cd var
-cd ansible/
-ansible -i hosts -m ping
-ls
-ping remote_host
-ansible -i hosts -m ping test1
-cd var
-ansible -i hosts -m ping test1
-exit
-exit
-ansible -i hosts -m ping test1
-exit
-ls
-ansible -i hosts -m ping test1
-cat ls
-ls
-cd var/
-ls
-cd jenkins_home/
-ls
-cd ..
-cd ,,
-exit
-ssh remote_user@remote_host
-ansible -i hosts -m ping test1
-ansible -i hosts -m ping test1
-ls
-cat var/jenkins_home/
-cat var/jenkins_home/known_hosts
-exit
-ansible -i hosts -m ping test1
-ll
-ls
-cd var/
-ll
-ls
-cd tmp/
-ls
-cd ..
-cd ..
-ls
-cd var/jenkins_home/
-ls
-cd .ssh/
-ls
-cat known_hosts 
-ansible -i hosts -m ping test1
-cd ..
-ls
-cd ..
-cd ..
-ls
-cd
-ls
-ll
-cd ansible/
-ll
-ansible -i hosts -m ping test1
- exit
-ls
-cd 
-cd ansible/
-ls
-cat play.yml 
-ansible-playbook -i hosts play.yml 
-docker exe -ti remote-host bash
-docker exec -ti remote-host bash
-exit
-cd
-ls
-cd ansible/
-ls
 cd ..
 cd
 exit
@@ -497,4 +392,109 @@ cd ..
 cd tmp/
 ls
 cd ..
+exit
+cd /home/
+ls
+cd ori
+ll
+ls -a
+exit
+ls
+cd var/jenkins_home/
+ls
+cd workspace/
+ls
+cd nofshonit-pipeline
+ls
+cd jenkins/
+ks
+ls
+cd build/
+ls
+pwd
+exit
+ls
+cd /var/tmp/
+ls
+cd ..
+ls
+cd jenkins_home/
+ls
+exit
+ls
+cd /var/
+ls
+cd jenkins_home/
+ls
+cd work
+cd workspace/
+ls
+cd nofshonit-pipeline
+ls
+ls
+cd nofshonit-new-web-client/
+ls
+ls
+pwd
+cd ..
+cd ..
+ls
+cd nofshonit-pipeline@tmp
+l
+ls
+ls
+ls
+ls -a
+cd ..
+ls
+exit
+ls
+cd var/
+ls
+cd jenkins_home/
+ls
+cd workspace/
+ls
+cd nofshonit-pipeline
+ls
+cd nofshonit-new-web-client/
+ls
+cd nofshonit-pipelinedocker-compose -f docker-compose-react.yml build --no-cache 
+docker-compose -f docker-compose-react.yml build --no-cache 
+ls -la
+service docker status
+exit
+service docker status
+@15ba47798431:/$ service docker status
+[FAIL] Docker is not running ...
+@15ba47798431:/$ service docker status
+systemctl start docker
+ sudo systemctl start docker
+service docker start
+docker --cersion
+docker --version
+ nofshonit-new-web-client && docker-compose -f docker-compose-react.yml build --no-cache 
+ls
+exit
+docker services
+docker service
+dockerd 
+service docker restart
+ nofshonit-new-web-client && docker-compose -f docker-compose-react.yml build --no-cache 
+docker-compose -f docker-compose-react.yml build --no-cache
+cd /var/jenkins_home/workspace/
+ls
+cd nofshonit-pipeline
+docker-compose -f docker-compose-react.yml build --no-cache
+ls
+cd nofshonit-new-web-client/
+cd nofshonit-new-web-client/
+docker-compose -f docker-compose-react.yml build --no-cache
+Couldn't connect to Docker daemon at http+docker://localhost - is it running?
+
+If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.
+Couldn't connect to Docker daemon at http+docker://localhost - is it running?
+
+If it's at a non-standard location, specify the URL with the DOCKER_HOST environment eval $(docker-machine env dev)
+eval $(docker-machine env dev)
 exit
