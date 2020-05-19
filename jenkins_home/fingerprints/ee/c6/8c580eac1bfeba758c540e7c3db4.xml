@@ -9,8 +9,12 @@
       <ranges>3-7,10-12</ranges>
     </entry>
     <entry>
-      <string>pipeline-docker-maven</string>
-      <ranges>2-9</ranges>
+      <string>nofshonit-pipeline</string>
+      <ranges>17</ranges>
+    </entry>
+    <entry>
+      <string>nofshonit-prod</string>
+      <ranges>1</ranges>
     </entry>
     <entry>
       <string>maven-job</string>
@@ -23,9 +27,19 @@
   </usages>
   <facets>
     <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@2.3.0">
-      <timestamp>1576767696717</timestamp>
+      <timestamp>1581118957040</timestamp>
       <itemFullName>pipeline-docker-maven</itemFullName>
-      <timestamp0>1576767638849</timestamp0>
+      <timestamp0>1581117813278</timestamp0>
+    </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
+    <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@2.3.0">
+      <timestamp>1581770288508</timestamp>
+      <itemFullName>nofshonit-pipeline</itemFullName>
+      <timestamp0>1581770288508</timestamp0>
+    </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
+    <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@2.3.0">
+      <timestamp>1581770935717</timestamp>
+      <itemFullName>nofshonit-prod</itemFullName>
+      <timestamp0>1581770935717</timestamp0>
     </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
   </facets>
 </fingerprint>

@@ -1,4 +1,4 @@
-Started at Tue Dec 03 23:12:15 UTC 2019
+Started at Sun Apr 26 13:19:26 UTC 2020
 Checking ansible-test
 Checking ansible-users-db
 Checking ansible-users-db-dsl
@@ -10,7 +10,11 @@ Checking job_ansilbe_dsl
 Checking job_dsl_example
 Checking maven-job
 Checking maven_dsl
+Checking nofshonit-pipeline
+Deleting /var/jenkins_home/workspace/nofshonit-pipeline on Jenkins
+Checking nofshonit-prod
+Deleting /var/jenkins_home/workspace/nofshonit-prod on Jenkins
 Checking seed-job
 Checking start-jmeter
 Checking updatePassword
-Finished at Tue Dec 03 23:12:15 UTC 2019. 12ms
+Finished at Sun Apr 26 13:19:29 UTC 2020. 2301ms

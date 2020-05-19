@@ -22,24 +22,6 @@ services:
       - $PWD/aws-s3.sh:/tmp/script.sh
     networks:
       - net
-  db_host:
-    container_name: db
-    image: mysql:5.7
-    environment:
-      - "MYSQL_ROOT_PASSWORD=1234"
-    volumes:
-      - $PWD/db_data:/var/lib/mysql
-    networks:
-      - net
-  web:
-    container_name: web
-    image: ansible-web
-    build:
-      context: jenkins-ansible/web
-    ports:
-      - "80:80"
-    networks:
-      - net
   git:
     container_name: git-server
     image: gitlab/gitlab-ce:9.5.9-ce.0
@@ -53,58 +35,6 @@ services:
       - '/srv/gitlab/data:/var/opt/gitlab'
     networks:
       - net
-  bitbucket:
-    image: eugenmayer/bitbucket
-    depends_on:
-      - postgres_bitbucket
-    networks:
-      - net
-    volumes:
-      - bitbucketdata:/var/atlassian/bitbucket
-    ports:
-      - '7990:7990'
-    environment:
-      - 'BITBUCKET_PROXY_NAME='
-      - 'BITBUCKET_PROXY_PORT='
-      - 'BITBUCKET_PROXY_SCHEME='
-      - 'BITBUCKET_DELAYED_START='
-      - 'DOCKER_WAIT_HOST=postgres_bitbucket'
-      - 'DOCKER_WAIT_PORT=5432'
-  postgres_bitbucket:
-    image: blacklabelops/postgres
-    networks:
-      - net
-    volumes:
-      - postgresqldata:/var/lib/postgresql/data
-    environment:
-      - 'POSTGRES_USER=bitbucketdb'
-      # CHANGE THE PASSWORD!
-      - 'POSTGRES_PASSWORD=jellyfish'
-      - 'POSTGRES_DB=bitbucketdb'
-      - 'POSTGRES_ENCODING=UTF8'
-  master:
-    image: vinsdocker/jmmaster
-    container_name: master
-    tty: true
-    hostname: master
-    volumes:
-      - $PWD/jmeterdata:/C/GitHub
-
-    networks:
-      - net
-  slave:
-    image: vinsdocker/jmserver
-    tty: true
-    volumes:
-     - $PWD/jmeterdata:/tmp/jmeterdata
-    networks:
-      - net
-volumes:
-  bitbucketdata:
-    external: false
-  postgresqldata:
-    external: false
-
 networks:
   net:
     driver: bridge

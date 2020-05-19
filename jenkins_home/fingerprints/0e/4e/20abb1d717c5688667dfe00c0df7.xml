@@ -5,8 +5,12 @@
   <fileName>Credential id=registry-pass name=registry-pass</fileName>
   <usages>
     <entry>
-      <string>pipeline-docker-maven</string>
-      <ranges>4-9</ranges>
+      <string>nofshonit-pipeline</string>
+      <ranges>17</ranges>
+    </entry>
+    <entry>
+      <string>nofshonit-prod</string>
+      <ranges>1</ranges>
     </entry>
   </usages>
   <facets/>

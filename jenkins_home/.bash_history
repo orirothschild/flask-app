@@ -1,23 +1,3 @@
-ZSqqrqLTalaN9GWoM1NlNrjrMmoAACoWWyeYird/bURkNL9wxabiXmybHWFlUp/g
-8yPU4OwIwqwRTn3AgtF0b8bH5wiauvmsvJ6JB+pA/bNzBGAH8hdABk52SUHwa0EA
-xBFV4mkCgYEA9ATl3VTYTgiVgyW1Q+dC8rjUVNvo6xJm372GlcuTsmrvd21bSozw
-HhF0fHBxM4Z1N6Ck04LLs+wMNHBvltsW6707dP5wToNL8HsXt1v8XnHZJl9ZWlts
-GOXJ4V6bwjCsb1ViRrKb5CmhXXBkiCiPiWjHwyMMZwEycTsPkQjC5D0CgYEA3qjD
-Cv9OyJOT+Ioe8X0YNjbRgoXytauiKvPyqpumOYjPFXR3ibZD1rM5CG5okq3HO/AK
-g3NoaHawIdcFNs4PKeV84/tw+RWPbunGtkjHYtoWNxAqDOGO9RvVaPldaKxtJlhl
-Slrny/4FVy0aJpK6xadUWOEm/1u/knohd7WL4CMCgYBc4ihlEVCsk1Pl8cqHqFWx
-cm1QR8zm/cAu1kOObUkxFsdEHFotjGwx5c8DNwG/7SRdIkbbQ+Qp/mW+6DVxpL+a
-yBMDu34gRJX5WcFzSA5OHOPdWVn3rOj+qSkpIgwD5OceEdAwvPfd54LGwGtj8JyC
-X2H6gzLLWodK1oJcYIteuQKBgQCvQSZEAbCBL6fIeO7iJRRpl7xQgB4J4I5EQL9A
-ikLMBmL5ADMWsd+znl3FxSGKUj3/b3DXBn+nucPo3tW7zXUiBP/IcqD5bX74Tgma
-cK5/oCjcLlzqxp8/Tikr9xsOyKkhBXK0k9jfN5H8jAOJWPSpnotFafLIC+892+N7
-1enDAQKBgDLgZHt9/NjgDsJKOODxM8EEQjjppbRyqoEclJffQg9e4Av4B0m2AIUM
-IJxlnpw26u8gA2Wl54/Q/EojewhVFl38tIxNRyQT1qex2RYS6uYbw4GlFrgNpyAV
-1NcKKyd0fyEdSaQbWtN6kaIa31Npl4ayU1ASi1GNULKit1MgsVLt
-ls
-cat remote-key 
-ls
-cd ..
 exit
 ls
 exit
@@ -495,6 +475,26 @@ sudo groupadd docker
 xit
 exit
 ls
+ls
+exit
+exit
+exit
+cd /var/opt/
+ls
+ca
+ll
+cd 
+exit
+cd tmp
+l
+ll
+touch.counter
+touch .counter
+cd
+ls
+exit
+touch /tmp/.counter
+exit
 ls
 exit
 exit
