@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: ./advanced_python
+      dockerfile: Dockerfile.prod
+    container_name: api
+    expose:
+      - 5000
+    env_file:
+      - ./.env
+  nginx:
+    depends_on:
+      - api
+    restart: always
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - api
+  
+  

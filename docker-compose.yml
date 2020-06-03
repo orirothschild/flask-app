@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: api
+    build: ./advanced_python
+    command: python app.py run -h 192.168.1.233
+    volumes:
+      - ./advanced_python/:/usr/src/app/
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    environment:
+      - ./.env.postgres
+      - DATABASE_URI=db
+    image: postgres:latest
+    networks:
+      - default
+    ports:
+      - 5405:5432
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  

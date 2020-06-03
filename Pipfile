@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-jwt-extended = "*"
+flask-restful = "*"
+flask-sqlalchemy = "*"
+marshmallow = "*"
+flask-marshmallow = "*"
+flask-migrate = "*"
+marshmallow-sqlalchemy = "*"
+requests = "*"
+python-dotenv = "*"
+flask-uploads = {git = "https://github.com/maxcountryman/flask-uploads.git",ref = "master"}
+flask-psycopg2 = "*"
+
+[requires]
+python_version = "3.7"
