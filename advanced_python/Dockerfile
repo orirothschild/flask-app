@@ -13,7 +13,7 @@ RUN pip install --upgrade pip
 RUN pip install werkzeug==0.16.1
 RUN pip install requests-oauthlib==1.1.0
 
-COPY ./requirements.txt /usr/src/app/requirements.txt
+COPY requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
 
 # copy project
