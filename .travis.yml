@@ -7,6 +7,7 @@ before_install:
 #runnning the test 
 script:
 - docker run -e CI=true ori/flask-test python app.py run -h 192.168.1.233
+- docker stop ori/flask-test 
 
 after_success:
   - docker build -t orirothschild/flask-prod -f ./advanced_python/Dockerfile.prod #build context
