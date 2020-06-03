@@ -3,7 +3,7 @@ services:
   - docker
 #dewvelpoment file to test the application first
 before_install:
-  - docker build -t ori/flask-test -f ./advanced_python/Dockerfile . #build context
+  - docker build -t ori/flask-test -f ./advanced_python/Dockerfile ./advanced_python #build context
 #runnning the test 
 script:
 - docker run -e CI=true ori/flask-test python app.py run -h 192.168.1.233
