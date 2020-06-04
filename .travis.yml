@@ -11,7 +11,7 @@ services:
 
 scriptls:
   - docker build -t orirothschild/flask-prod -f ./advanced_python/Dockerfile.prod  ./advanced_python #build context
-  - docker build -t orirothschild/flask-nginx /nginx ./nginx #builld context
+  - docker build -t orirothschild/flask-nginx ./nginx ./nginx #builld context
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push orirothschild/flask-prod
   - docker push orirothschild/flask-nginx
