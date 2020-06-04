@@ -2,14 +2,14 @@ sudo: required
 services:
   - docker
 #dewvelpoment file to test the application first
-before_install:
-  - docker build -t ori/flask-test -f ./advanced_python/Dockerfile ./advanced_python #build context
+# cd ..
+
 #runnning the test 
 # script:
 # - docker run -e CI=true ori/flask-test python app.py run -h 192.168.1.233
 # - docker stop ori/flask-test 
 
-after_success:
+script:
   - docker build -t orirothschild/flask-prod -f ./advanced_python/Dockerfile.prod #build context
   - docker build -t orirothschild/flask-nginx ./advanced_python/nginx #builld context
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
